@@ -1,8 +1,13 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Zacke on 2016-01-18.
@@ -16,24 +21,31 @@ public class GUI {
     private JButton greenButton;
     private JButton searchButton;
 
+    private JPanel upperPanel;
+    private JPanel rightPanel;
+    private JPanel leftPanel;
+    private JPanel lowerPanel;
+
     private JTextField searchField;
 
     private JComboBox comboBox;
+
+    private JScrollPane scrollPane = new JScrollPane();
+
+    private String imageURL = "";
+
 
 
     //Should only be called on EDT
     public GUI() {
 
-        buildFrame();
+        //buildFrame();
 
     }
 
     private JPanel buildUpperPanel() {
         JPanel upperPanel = new JPanel();
         upperPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
-
-
-        //upperPanel.add(textField, BorderLayout.CENTER);
 
         // Combobox
         JLabel labelCombo = new JLabel("Combo Boxxen");
@@ -42,6 +54,8 @@ public class GUI {
         String[] options = { "Option1", "Option2", "Option3", "Option4", "Option15" };
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener());
+
+        searchButton = new JButton();
 
         searchField = new JTextField("Search filter");
 
@@ -56,19 +70,34 @@ public class GUI {
     }
 
     private JPanel buildRightPanel() {
-        JPanel middlePanel = new JPanel();
-        middlePanel.setBorder(BorderFactory.createTitledBorder("Textfärgskontroll"));
-        middlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JPanel rightPanel = new JPanel();
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Info"));
+        //rightPanel.setLayout(new FlowLayout());
 
-        return middlePanel;
+        JLabel label = new JLabel();
+        JLabel image = new JLabel();
+        label.setText("TJENARE JESPER");
+        //image.setIcon(new ImageIcon("http://images.tuinordic.com/travel/images/hotel/Default.jpg"));
+        try {
+            image.setIcon(new ImageIcon(ImageIO.read(new URL(imageURL))));
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+
+        rightPanel.add(label);
+        rightPanel.add(image, FlowLayout.LEFT);
+
+        return rightPanel;
     }
 
     private JPanel buildLeftPanel() {
-        JPanel middlePanel = new JPanel();
-        middlePanel.setBorder(BorderFactory.createTitledBorder("Textfärgskontroll"));
-        middlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JPanel leftPanel = new JPanel();
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
+        leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        return middlePanel;
+        leftPanel.add(scrollPane);
+
+        return leftPanel;
     }
 
     private JPanel buildLowerPanel() {
@@ -86,15 +115,15 @@ public class GUI {
     public void buildFrame() {
 
         // Build panels
-        JPanel upperPanel = buildUpperPanel();
-        JPanel rightPanel = buildRightPanel();
-        JPanel leftPanel = buildLeftPanel();
-        JPanel lowerPanel = buildLowerPanel();
+        upperPanel = buildUpperPanel();
+        rightPanel = buildRightPanel();
+        leftPanel = buildLeftPanel();
+        lowerPanel = buildLowerPanel();
 
         //Add panels to the frame
         frame.add(upperPanel, BorderLayout.NORTH);
-        frame.add(leftPanel, BorderLayout.EAST);
-        frame.add(rightPanel, BorderLayout.WEST);
+        frame.add(leftPanel, BorderLayout.WEST);
+        frame.add(rightPanel, BorderLayout.EAST);
         frame.add(lowerPanel, BorderLayout.SOUTH);
 
         frame.setTitle("Offers");
@@ -107,6 +136,20 @@ public class GUI {
 
     public void buildTable(JTable table) {
 
+        scrollPane = new JScrollPane(table);
+        buildFrame();
+
+
+    }
+
+    public void updateInfo(String imageURL) {
+
+        this.imageURL = imageURL;
+        frame.remove(rightPanel);
+        rightPanel = buildRightPanel();
+        frame.add(rightPanel);
+        frame.pack();
+        System.out.println(imageURL);
 
     }
 

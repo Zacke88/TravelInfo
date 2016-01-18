@@ -34,6 +34,7 @@ public class ReadXML {
             boolean bDepaurte = false;
             boolean bOutDate = false;
             boolean bDestinationName = false;
+            boolean bHotelImage = false;
 
             //Method is called every time the parser gets an open tag '<'
             //Identifies which tag is being open
@@ -53,6 +54,9 @@ public class ReadXML {
                 }
                 if(qName.contentEquals("DestinationName")) {
                     bDestinationName = true;
+                }
+                if(qName.contentEquals("HotelImage")) {
+                    bHotelImage = true;
                 }
 
                 }
@@ -82,6 +86,10 @@ public class ReadXML {
                     if(bDestinationName) {
                         model.setDestinationName(new String(ch, start, length));
                         bDestinationName = false;
+                    }
+                    if(bHotelImage) {
+                        model.setHotelImage(new String(ch, start, length));
+                        bHotelImage = false;
                     }
                 }
             };

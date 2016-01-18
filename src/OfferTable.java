@@ -17,6 +17,8 @@ public class OfferTable extends AbstractTableModel {
 
     public OfferTable(List<ModelOffers> list) {
 
+        data = new Object[list.size()][dataRows];
+
         setData(list);
 
     }
@@ -48,13 +50,13 @@ public class OfferTable extends AbstractTableModel {
 
     public void setData(List<ModelOffers> list) {
 
-        Object[][] data = new Object[list.size()][dataRows];
+        for(int i = 0; i < list.size(); i++) {
 
-        for(int i = 0; i <= list.size(); i++) {
-            data[i][0] = list.get(i).getCampaignName();
-            data[i][1] = list.get(i).getDepartureName();
-            data[i][2] = list.get(i).getOutDate();
-            data[i][3] = list.get(i).getDestinationName();
+            setValueAt(list.get(i).getCampaignName(), i, 0);
+            setValueAt(list.get(i).getDepartureName(), i, 1);
+            setValueAt(list.get(i).getOutDate(), i, 2);
+            setValueAt(list.get(i).getDestinationName(), i, 3);
+
         }
 
     }

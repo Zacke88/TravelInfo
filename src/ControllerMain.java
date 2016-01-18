@@ -11,10 +11,10 @@ public class ControllerMain {
         xml.readFile();
 
         JTable table = new JTable(new OfferTable(xml.getList()));
-        JScrollPane scrollPane = new JScrollPane(table);
 
         GUI gui = new GUI();
         gui.buildTable(table);
+        gui.updateInfo(xml.getList().get(0).hotelImage);
 
 
     }
