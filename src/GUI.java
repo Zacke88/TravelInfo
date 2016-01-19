@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -25,6 +26,8 @@ public class GUI {
     private JPanel rightPanel;
     private JPanel leftPanel;
     private JPanel lowerPanel;
+
+    private JMenuBar menu = new JMenuBar();
 
     private JTextField searchField;
 
@@ -55,16 +58,16 @@ public class GUI {
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener());
 
-        searchButton = new JButton();
+        searchButton = new JButton("Search");
 
         searchField = new JTextField("Search filter");
 
         searchButton.addActionListener(new SearchListener());
 
-        upperPanel.add(labelCombo, FlowLayout.LEFT);
-        upperPanel.add(comboBox, FlowLayout.LEFT);
-        upperPanel.add(searchField, FlowLayout.RIGHT);
-        upperPanel.add(searchButton, FlowLayout.RIGHT);
+        upperPanel.add(labelCombo);
+        upperPanel.add(comboBox);
+        upperPanel.add(searchField);
+        upperPanel.add(searchButton);
 
         return upperPanel;
     }
@@ -126,6 +129,9 @@ public class GUI {
         frame.add(rightPanel, BorderLayout.EAST);
         frame.add(lowerPanel, BorderLayout.SOUTH);
 
+        buildMenu();
+        frame.setJMenuBar(menu);
+
         frame.setTitle("Offers");
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -134,12 +140,41 @@ public class GUI {
 
     }
 
+    public void buildMenu() {
+
+        JMenu file = new JMenu("File");
+        menu.add(file);
+        JMenuItem exit = new JMenuItem("Exit");
+        file.add(exit);
+        JMenu help = new JMenu("Help");
+        menu.add(help);
+        JMenuItem about = new JMenuItem("About");
+        help.add(about);
+
+        class ExitAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        }
+
+        class AboutAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Made by Joakim Zakrisson ( id12jzn)");
+
+            }
+        }
+
+        exit.addActionListener(new ExitAction());
+        about.addActionListener(new AboutAction());
+    }
+
     public void buildTable(JTable table) {
 
         scrollPane = new JScrollPane(table);
+        table.setAutoCreateRowSorter(true);
         buildFrame();
-
-
     }
 
     public void updateInfo(String imageURL) {
