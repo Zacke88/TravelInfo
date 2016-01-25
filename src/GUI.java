@@ -1,14 +1,16 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Zacke on 2016-01-18.
@@ -17,15 +19,15 @@ public class GUI {
 
     private JFrame frame = new JFrame();
 
-    private JButton blackButton;
-    private JButton redButton;
-    private JButton greenButton;
-    private JButton searchButton;
+    private JButton updateButton;
 
     private JPanel upperPanel;
     private JPanel rightPanel;
     private JPanel leftPanel;
     private JPanel lowerPanel;
+
+    private JLabel time = new JLabel();
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
     private JMenuBar menu = new JMenuBar();
 
@@ -36,6 +38,10 @@ public class GUI {
     private JScrollPane scrollPane = new JScrollPane();
 
     private String imageURL = "";
+
+    private TableRowSorter<TableModel> rowSorter;
+
+    private JTable table;
 
 
 
@@ -49,46 +55,52 @@ public class GUI {
     private JPanel buildUpperPanel() {
         JPanel upperPanel = new JPanel();
         upperPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
+        upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         // Combobox
-        JLabel labelCombo = new JLabel("Combo Boxxen");
+        JLabel labelCombo = new JLabel("Set update interval: ");
 
         // Options in the combobox
-        String[] options = { "Option1", "Option2", "Option3", "Option4", "Option15" };
+        String[] options = { "30min", "60min", "90min"};
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener());
 
-        searchButton = new JButton("Search");
+        searchField = new JTextField("Search");
+        searchField.setColumns(12);
 
-        searchField = new JTextField("Search filter");
+        updateButton = new JButton("Update");
+        updateButton.addActionListener(new UpdateListener(this));
 
-        searchButton.addActionListener(new SearchListener());
-
+        upperPanel.add(searchField);
         upperPanel.add(labelCombo);
         upperPanel.add(comboBox);
-        upperPanel.add(searchField);
-        upperPanel.add(searchButton);
+        upperPanel.add(updateButton);
 
         return upperPanel;
     }
 
     private JPanel buildRightPanel() {
         JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BorderLayout());
         rightPanel.setBorder(BorderFactory.createTitledBorder("Info"));
-        //rightPanel.setLayout(new FlowLayout());
 
         JLabel label = new JLabel();
         JLabel image = new JLabel();
-        label.setText("TJENARE JESPER");
-        //image.setIcon(new ImageIcon("http://images.tuinordic.com/travel/images/hotel/Default.jpg"));
+
+        if(imageURL.equals("")) {
+            label.setText("Select item in list to show more info");
+        }
+        if(imageURL.contains("Default")) {
+            label.setText("No hotel image available");
+        }
         try {
             image.setIcon(new ImageIcon(ImageIO.read(new URL(imageURL))));
         } catch (IOException e) {
-            //e.printStackTrace();
+            label.setText("Could not load hotel image");
         }
 
-        rightPanel.add(label);
-        rightPanel.add(image, FlowLayout.LEFT);
+        rightPanel.add(label, BorderLayout.NORTH);
+        rightPanel.add(image, BorderLayout.CENTER);
 
         return rightPanel;
     }
@@ -96,7 +108,8 @@ public class GUI {
     private JPanel buildLeftPanel() {
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
-        leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        leftPanel.setLayout(new BorderLayout());
+        //leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         leftPanel.add(scrollPane);
 
@@ -108,9 +121,12 @@ public class GUI {
 
         lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JCheckBox disableCheckBox = new JCheckBox("Inga förändringar");
+        JLabel updated = new JLabel("Last updated: ");
 
-        lowerPanel.add(disableCheckBox);
+        time.setText(sdf.format(new Date()));
+
+        lowerPanel.add(updated);
+        lowerPanel.add(time);
 
         return lowerPanel;
     }
@@ -162,7 +178,6 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(frame, "Made by Joakim Zakrisson ( id12jzn)");
-
             }
         }
 
@@ -173,20 +188,51 @@ public class GUI {
     public void buildTable(JTable table) {
 
         scrollPane = new JScrollPane(table);
+
+        table.removeColumn(table.getColumnModel().getColumn(3));
+
         table.setAutoCreateRowSorter(true);
+
         buildFrame();
+
+        searchField.getDocument().addDocumentListener(new SearchListener(table, searchField));
+        table.getSelectionModel().addListSelectionListener(new TableSelectionListener(this));
+
+        this.table = table;
+
+        time.setText(sdf.format(new Date()));
     }
 
-    public void updateInfo(String imageURL) {
+    public void rebuildTable(JTable table) {
 
-        this.imageURL = imageURL;
+        scrollPane = new JScrollPane(table);
+        table.removeColumn(table.getColumnModel().getColumn(3));
+        table.setAutoCreateRowSorter(true);
+
+        imageURL = "";
         frame.remove(rightPanel);
         rightPanel = buildRightPanel();
-        frame.add(rightPanel);
+        frame.remove(leftPanel);
+        leftPanel = buildLeftPanel();
+        frame.add(leftPanel, BorderLayout.WEST);
+        frame.add(rightPanel, BorderLayout.EAST);
         frame.pack();
-        System.out.println(imageURL);
 
+        searchField.getDocument().addDocumentListener(new SearchListener(table, searchField));
+        table.getSelectionModel().addListSelectionListener(new TableSelectionListener(this));
+
+
+        time.setText(sdf.format(new Date()));
     }
 
+    public void updateInfo(int row) {
+
+        System.out.println(table.getModel().getValueAt(table.convertRowIndexToModel(row), 3));
+        imageURL = table.getModel().getValueAt(table.convertRowIndexToModel(row), 3).toString();
+        frame.remove(rightPanel);
+        rightPanel = buildRightPanel();
+        frame.add(rightPanel, BorderLayout.EAST);
+        frame.pack();
+    }
 
 }

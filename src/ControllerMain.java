@@ -14,9 +14,5 @@ public class ControllerMain {
 
         GUI gui = new GUI();
         gui.buildTable(table);
-        gui.updateInfo(xml.getList().get(0).hotelImage);
-
-
     }
-
 }

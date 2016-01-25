@@ -35,6 +35,7 @@ public class ReadXML {
             boolean bOutDate = false;
             boolean bDestinationName = false;
             boolean bHotelImage = false;
+            boolean bCurrentPrice = false;
 
             //Method is called every time the parser gets an open tag '<'
             //Identifies which tag is being open
@@ -57,6 +58,9 @@ public class ReadXML {
                 }
                 if(qName.contentEquals("HotelImage")) {
                     bHotelImage = true;
+                }
+                if(qName.contentEquals("CurrentPrice")) {
+                    bCurrentPrice = true;
                 }
 
                 }
@@ -90,6 +94,13 @@ public class ReadXML {
                     if(bHotelImage) {
                         model.setHotelImage(new String(ch, start, length));
                         bHotelImage = false;
+                    }
+                    if(bCurrentPrice) {
+                        //model.setCurrentPrice(Integer.parseInt(new String(ch, start, length).split("\\s+")));
+                        String price = new String(ch, start, length);
+                        String priceString[] = price.split("\\s+");
+                        model.setCurrentPrice(Integer.parseInt(priceString[0]));
+                        bCurrentPrice = false;
                     }
                 }
             };

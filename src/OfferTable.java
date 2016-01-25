@@ -8,10 +8,10 @@ public class OfferTable extends AbstractTableModel {
 
     private int dataRows = 4;
 
-    String[] columnNames = {"Campaign",
-            "Departure",
-            "OutDate",
-            "DestinationName"};
+    String[] columnNames = {"Destination",
+            "Date",
+            "Price",
+    "Image"};
 
     Object[][] data;
 
@@ -43,6 +43,22 @@ public class OfferTable extends AbstractTableModel {
         return data[row][col];
     }
 
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        // TODO Auto-generated method stub
+        switch(columnIndex){
+            case 0:
+                return String.class;
+            case 1:
+                return String.class;
+            case 2:
+                return Integer.class;
+            case 3:
+                return String.class;
+        }
+        return null;
+    }
+
     public void setValueAt(Object value, int row, int col) {
         data[row][col] = value;
         fireTableCellUpdated(row, col);
@@ -52,10 +68,10 @@ public class OfferTable extends AbstractTableModel {
 
         for(int i = 0; i < list.size(); i++) {
 
-            setValueAt(list.get(i).getCampaignName(), i, 0);
-            setValueAt(list.get(i).getDepartureName(), i, 1);
-            setValueAt(list.get(i).getOutDate(), i, 2);
-            setValueAt(list.get(i).getDestinationName(), i, 3);
+            setValueAt(list.get(i).getDestinationName(), i, 0);
+            setValueAt(list.get(i).getOutDate(), i, 1);
+            setValueAt(list.get(i).getCurrentPrice(), i, 2);
+            setValueAt(list.get(i).getHotelImage(), i, 3);
 
         }
 

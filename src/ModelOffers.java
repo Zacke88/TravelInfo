@@ -11,8 +11,8 @@ public class ModelOffers {
     String roomDescription;
     String journeyLength;
     String flightExtern;
-    String currentPrice;
-    String originalPrice;
+    int currentPrice;
+    int originalPrice;
     String priceCurrency;
     String hotelName;
     String hotelImage;
@@ -87,19 +87,19 @@ public class ModelOffers {
         this.flightExtern = flightExtern;
     }
 
-    public String getCurrentPrice() {
+    public int getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(String currentPrice) {
+    public void setCurrentPrice(int currentPrice) {
         this.currentPrice = currentPrice;
     }
 
-    public String getOriginalPrice() {
+    public int getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setOriginalPrice(String originalPrice) {
+    public void setOriginalPrice(int originalPrice) {
         this.originalPrice = originalPrice;
     }
 
