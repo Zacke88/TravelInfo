@@ -162,6 +162,12 @@ public class GUI {
         menu.add(file);
         JMenuItem exit = new JMenuItem("Exit");
         file.add(exit);
+        JMenu theme = new JMenu("Theme");
+        menu.add(theme);
+        JMenuItem light = new JMenuItem("Neutral");
+        theme.add(light);
+        JMenuItem dark = new JMenuItem("Funky");
+        theme.add(dark);
         JMenu help = new JMenu("Help");
         menu.add(help);
         JMenuItem about = new JMenuItem("About");
@@ -181,8 +187,27 @@ public class GUI {
             }
         }
 
+        class LightAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                upperPanel.setBackground(Color.white);
+                lowerPanel.setBackground(Color.white);
+            }
+        }
+
+        class DarkAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                upperPanel.setBackground(Color.cyan);
+                lowerPanel.setBackground(Color.cyan);
+
+            }
+        }
+
         exit.addActionListener(new ExitAction());
         about.addActionListener(new AboutAction());
+        light.addActionListener(new LightAction());
+        dark.addActionListener(new DarkAction());
     }
 
     public void buildTable(JTable table) {
