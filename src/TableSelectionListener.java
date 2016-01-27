@@ -16,12 +16,8 @@ public class TableSelectionListener implements ListSelectionListener {
         this.gui = gui;
     }
 
-
     @Override
     public void valueChanged(ListSelectionEvent e) {
-
-        //System.out.println(e.getValueIsAdjusting());
-        //System.out.println(e.getSource().toString().contains("{}"));
 
         if (e.getValueIsAdjusting() && !e.getSource().toString().contains("{}")) {
             DefaultListSelectionModel selection = (DefaultListSelectionModel) e.getSource();

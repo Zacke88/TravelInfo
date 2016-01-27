@@ -10,12 +10,9 @@ import java.util.List;
  */
 public class OfferTable extends AbstractTableModel {
 
-    private int dataRows = 4;
+    private int dataRows = 6;
 
-    String[] columnNames = {"Destination",
-            "Date",
-            "Price",
-    "Image"};
+    String[] columnNames = {"Destination", "Date", "Price", "Image", "City", "Description"};
 
     Object[][] data;
 
@@ -24,7 +21,6 @@ public class OfferTable extends AbstractTableModel {
         data = new Object[list.size()][dataRows];
 
         setData(list);
-
     }
 
     @Override
@@ -58,6 +54,10 @@ public class OfferTable extends AbstractTableModel {
                 return Integer.class;
             case 3:
                 return String.class;
+            case 4:
+                return String.class;
+            case 5:
+                return String.class;
         }
         return null;
     }
@@ -75,6 +75,8 @@ public class OfferTable extends AbstractTableModel {
             setValueAt(list.get(i).getOutDate(), i, 1);
             setValueAt(list.get(i).getCurrentPrice(), i, 2);
             setValueAt(list.get(i).getHotelImage(), i, 3);
+            setValueAt(list.get(i).getCityName(), i, 4);
+            setValueAt(list.get(i).getRoomDescription(), i, 5);
         }
     }
 }

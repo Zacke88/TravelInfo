@@ -45,6 +45,8 @@ public class ReadXML {
             boolean bDestinationName = false;
             boolean bHotelImage = false;
             boolean bCurrentPrice = false;
+            boolean bCityName = false;
+            boolean bRoomDescription = false;
 
             /**
              * Metoden kallas på varje gång parsern läser in en start-tagg '<' och identifierar vilken tagg den hittat
@@ -77,6 +79,12 @@ public class ReadXML {
                 }
                 if(qName.contentEquals("CurrentPrice")) {
                     bCurrentPrice = true;
+                }
+                if(qName.contentEquals("CityName")) {
+                    bCityName = true;
+                }
+                if(qName.contentEquals("RoomDescription")) {
+                    bRoomDescription = true;
                 }
 
                 }
@@ -131,6 +139,14 @@ public class ReadXML {
                         String priceString[] = price.split("\\s+");
                         model.setCurrentPrice(Integer.parseInt(priceString[0]));
                         bCurrentPrice = false;
+                    }
+                    if(bCityName) {
+                        model.setCityName(new String(ch, start, length));
+                        bCityName = false;
+                    }
+                    if(bRoomDescription) {
+                        model.setRoomDescription(new String(ch, start, length));
+                        bRoomDescription = false;
                     }
                 }
             };

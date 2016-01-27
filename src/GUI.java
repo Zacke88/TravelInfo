@@ -41,6 +41,8 @@ public class GUI {
     private JScrollPane scrollPane = new JScrollPane();
 
     private String imageURL = "";
+    private String description = "";
+    private String cityName = "";
 
     private TableRowSorter<TableModel> rowSorter;
 
@@ -49,7 +51,7 @@ public class GUI {
     /**
      * Bygger den övre panalen till framen vilket består av olika val och filtreringar användaren kan göra
      *
-     * @return
+     * @return en JPanel av panale som byggts
      */
     private JPanel buildUpperPanel() {
         JPanel upperPanel = new JPanel();
@@ -81,7 +83,7 @@ public class GUI {
     /**
      * Bygger den högra panelen till framen vilket består av info för den rad i tabellen som är markerad
      *
-     * @return
+     * @return en JPanel av panale som byggts
      */
     private JPanel buildRightPanel() {
         JPanel rightPanel = new JPanel();
@@ -90,21 +92,35 @@ public class GUI {
 
         JLabel label = new JLabel();
         JLabel image = new JLabel();
+        JLabel infoText = new JLabel();
 
         if(imageURL.equals("")) {
             label.setText("Select item in list to show more info");
         }
+        else {
+            try {
+                image.setIcon(new ImageIcon(ImageIO.read(new URL(imageURL))));
+            } catch (IOException e) {
+                label.setText("Could not load hotel image");
+            }
+        }
+
         if(imageURL.contains("Default")) {
             label.setText("No hotel image available");
         }
-        try {
-            image.setIcon(new ImageIcon(ImageIO.read(new URL(imageURL))));
-        } catch (IOException e) {
-            label.setText("Could not load hotel image");
+
+        if(!cityName.equals("") || !description.equals("")) {
+            infoText.setText("City: " + cityName + "   Description: " + description);
+            cityName = "";
+            description = "";
+        }
+        else {
+            infoText.setText("");
         }
 
         rightPanel.add(label, BorderLayout.NORTH);
         rightPanel.add(image, BorderLayout.CENTER);
+        rightPanel.add(infoText, BorderLayout.SOUTH);
 
         return rightPanel;
     }
@@ -113,7 +129,7 @@ public class GUI {
      * Bygger den vänstra panelen till framen vilket består av tabellen som visar en lista över alla Offers
      * Denna tabell går att sortera
      *
-     * @return
+     * @return en JPanel av panale som byggts
      */
     private JPanel buildLeftPanel() {
         JPanel leftPanel = new JPanel();
@@ -129,7 +145,7 @@ public class GUI {
     /**
      * Bygger den nedre panelen till framen vilket
      *
-     * @return
+     * @return en JPanel av panale som byggts
      */
     private JPanel buildLowerPanel() {
         JPanel lowerPanel = new JPanel();
@@ -242,6 +258,8 @@ public class GUI {
 
         scrollPane = new JScrollPane(table);
 
+        table.removeColumn(table.getColumnModel().getColumn(5));
+        table.removeColumn(table.getColumnModel().getColumn(4));
         table.removeColumn(table.getColumnModel().getColumn(3));
 
         table.setAutoCreateRowSorter(true);
@@ -265,6 +283,8 @@ public class GUI {
     public void rebuildTable(JTable table) {
 
         scrollPane = new JScrollPane(table);
+        table.removeColumn(table.getColumnModel().getColumn(5));
+        table.removeColumn(table.getColumnModel().getColumn(4));
         table.removeColumn(table.getColumnModel().getColumn(3));
         table.setAutoCreateRowSorter(true);
 
@@ -286,6 +306,7 @@ public class GUI {
 
     /**
      * Updaterar infot som visas i den högra panelen, bör kallas på då användaren trycker på en ny rad i tabellen
+     * Har ett radnummer som inparameter så den vet vilket erbjudande den skall visa information för
      *
      * @param row
      */
@@ -293,6 +314,8 @@ public class GUI {
 
         System.out.println(table.getModel().getValueAt(table.convertRowIndexToModel(row), 3));
         imageURL = table.getModel().getValueAt(table.convertRowIndexToModel(row), 3).toString();
+        cityName = table.getModel().getValueAt(table.convertRowIndexToModel(row), 4).toString();
+        description = table.getModel().getValueAt(table.convertRowIndexToModel(row), 5).toString();
         frame.remove(rightPanel);
         rightPanel = buildRightPanel();
         frame.add(rightPanel, BorderLayout.EAST);
