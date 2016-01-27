@@ -2,7 +2,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Zacke on 2016-01-18.
+ * Created by id12jzn on 2016-01-18.
+ *
+ * Lyssnare för val som görs i ComboBoxen som GUI't skapar
+ * Denna combobox anger i vilket intervall tabellen skall updateras
  */
 public class ComboBoxListener implements ActionListener {
 
@@ -18,7 +21,5 @@ public class ComboBoxListener implements ActionListener {
         if(e.getSource().toString().contains("90min")) {
             System.out.println("90");
         }
-
-
     }
 }

@@ -2,7 +2,11 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 /**
- * Created by Zacke on 2016-01-18.
+ * Created by id12jzn on 2016-01-18.
+ *
+ * Bygger upp tabellen för GUI't som består av samtliga offers programmet läst in
+ * Här anges vilka kolumner som finns i tabellen och data läggs ttill enligt listan med alla offers som tas in i
+ * konstruktorn. Metoder finns för att sätta samt hämta data och kolumner
  */
 public class OfferTable extends AbstractTableModel {
 
@@ -45,7 +49,6 @@ public class OfferTable extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        // TODO Auto-generated method stub
         switch(columnIndex){
             case 0:
                 return String.class;
@@ -72,8 +75,6 @@ public class OfferTable extends AbstractTableModel {
             setValueAt(list.get(i).getOutDate(), i, 1);
             setValueAt(list.get(i).getCurrentPrice(), i, 2);
             setValueAt(list.get(i).getHotelImage(), i, 3);
-
         }
-
     }
 }

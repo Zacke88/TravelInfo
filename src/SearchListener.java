@@ -8,7 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Zacke on 2016-01-18.
+ * Created by id12jzn on 2016-01-18.
+ *
+ * Lyssnare för sökfältet i GUI't, en form av docemtlistener som updaterar tabellen baserat på vad som skrivits in
+ * eftersom det skrivs. Den söker i samtliga kolumner som syns i tabellen
  */
 public class SearchListener implements DocumentListener {
 

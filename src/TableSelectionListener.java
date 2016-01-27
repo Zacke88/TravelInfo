@@ -3,7 +3,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * Created by Zacke on 2016-01-25.
+ * Created by id12jzn on 2016-01-25.
+ *
+ * Lyssnare till tabellen för att visa rätt info i GUI't baserat på vilken rad användaren klickar på
+ * Kallas på barje gång en ny rad klickas på
  */
 public class TableSelectionListener implements ListSelectionListener {
 

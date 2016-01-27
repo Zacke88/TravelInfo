@@ -4,9 +4,11 @@ import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
- * Created by Zacke on 2016-01-25.
+ * Created by id12jzn on 2016-01-25.
+ *
+ * En klass som kan köras som en tråd vilket updaterar tabellen i GUI't efter ett angivet intervall
  */
-public class UpdateTable implements Runnable {
+public class TableUpdater implements Runnable {
 
 
     @Override

@@ -13,7 +13,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Zacke on 2016-01-18.
+ * Created by id12jzn on 2016-01-18.
+ *
+ * GUI-klass som bygger upp hela vyn för programmet. Den bygger en frame vilket sedan består av en BorderlLayout.
+ * Denna frame består av olika paneler som placeras ut enligt layouten
  */
 public class GUI {
 
@@ -43,15 +46,11 @@ public class GUI {
 
     private JTable table;
 
-
-
-    //Should only be called on EDT
-    public GUI() {
-
-        //buildFrame();
-
-    }
-
+    /**
+     * Bygger den övre panalen till framen vilket består av olika val och filtreringar användaren kan göra
+     *
+     * @return
+     */
     private JPanel buildUpperPanel() {
         JPanel upperPanel = new JPanel();
         upperPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
@@ -79,6 +78,11 @@ public class GUI {
         return upperPanel;
     }
 
+    /**
+     * Bygger den högra panelen till framen vilket består av info för den rad i tabellen som är markerad
+     *
+     * @return
+     */
     private JPanel buildRightPanel() {
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
@@ -105,6 +109,12 @@ public class GUI {
         return rightPanel;
     }
 
+    /**
+     * Bygger den vänstra panelen till framen vilket består av tabellen som visar en lista över alla Offers
+     * Denna tabell går att sortera
+     *
+     * @return
+     */
     private JPanel buildLeftPanel() {
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
@@ -116,6 +126,11 @@ public class GUI {
         return leftPanel;
     }
 
+    /**
+     * Bygger den nedre panelen till framen vilket
+     *
+     * @return
+     */
     private JPanel buildLowerPanel() {
         JPanel lowerPanel = new JPanel();
 
@@ -131,6 +146,9 @@ public class GUI {
         return lowerPanel;
     }
 
+    /**
+     * Bygger upp själva framen och lägger till samtliga paneler som tillhör den
+     */
     public void buildFrame() {
 
         // Build panels
@@ -156,6 +174,10 @@ public class GUI {
 
     }
 
+    /**
+     * Bygger upp menyraden som finns upptill på framen där användaren kan göra de val som läggs till
+     * Innehar också lyssnare för samtliga menyval
+     */
     public void buildMenu() {
 
         JMenu file = new JMenu("File");
@@ -210,6 +232,12 @@ public class GUI {
         dark.addActionListener(new DarkAction());
     }
 
+    /**
+     * Har en tabell som inparameter vilket skapas utanför GUI-klassen för att sedan lägga till en scroll för denna
+     * och välja vilka koolumner som skall visas för att tillslut visa deni rätt panel
+     *
+     * @param table
+     */
     public void buildTable(JTable table) {
 
         scrollPane = new JScrollPane(table);
@@ -228,6 +256,12 @@ public class GUI {
         time.setText(sdf.format(new Date()));
     }
 
+
+    /**
+     * Bygger om tabellen för att updatera datat i denna
+     *
+     * @param table
+     */
     public void rebuildTable(JTable table) {
 
         scrollPane = new JScrollPane(table);
@@ -250,6 +284,11 @@ public class GUI {
         time.setText(sdf.format(new Date()));
     }
 
+    /**
+     * Updaterar infot som visas i den högra panelen, bör kallas på då användaren trycker på en ny rad i tabellen
+     *
+     * @param row
+     */
     public void updateInfo(int row) {
 
         System.out.println(table.getModel().getValueAt(table.convertRowIndexToModel(row), 3));

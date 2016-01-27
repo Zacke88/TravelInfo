@@ -11,13 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Zacke on 2016-01-10.
+ * Created by id12jzn on 2016-01-10.
+ *
+ * Denna klass läser in data från en xml-fil/sida från angivna taggar. Den sparar datat i ModelOffers-klassen och
+ * skapar en lista av alla Offers den har läst in
  */
 public class ReadXML {
 
     List offers = new ArrayList<ModelOffers>();
     ModelOffers model;
 
+    /**
+     * Läser in data genom en SAXParser
+     *
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     */
     public void readFile() throws ParserConfigurationException, SAXException {
 
         // SAX Parser
@@ -37,8 +46,15 @@ public class ReadXML {
             boolean bHotelImage = false;
             boolean bCurrentPrice = false;
 
-            //Method is called every time the parser gets an open tag '<'
-            //Identifies which tag is being open
+            /**
+             * Metoden kallas på varje gång parsern läser in en start-tagg '<' och identifierar vilken tagg den hittat
+             *
+             * @param uri
+             * @param localName
+             * @param qName
+             * @param attributes
+             * @throws SAXException
+             */
             public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
                 if(qName.contentEquals("Offer")) {
@@ -65,14 +81,28 @@ public class ReadXML {
 
                 }
 
-            //Print data stored between tags
+            /**
+             * Läser in data som finns i en huvudtagg
+             *
+             * @param uri
+             * @param localName
+             * @param qName
+             * @throws SAXException
+             */
             public void endElement(String uri, String localName, String qName) throws SAXException {
                 if(qName.contentEquals("Offer")) {
                     offers.add(model);
                 }
             }
 
-                //Print data stored between tags
+            /**
+             * Läser in de element som finns mellan en start och en slut-tagg
+             *
+             * @param ch
+             * @param start
+             * @param length
+             * @throws SAXException
+             */
                 public void characters(char ch[], int start, int length) throws SAXException {
 
                     if(bCampaign) {
@@ -113,8 +143,6 @@ public class ReadXML {
 
     public List<ModelOffers> getList() {
         return offers;
-
-
     }
 }
 
