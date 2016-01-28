@@ -14,7 +14,11 @@ public class ControllerMain {
 
         JTable table = new JTable(new OfferTable(xml.getList()));
 
-        GUI gui = new GUI();
-        gui.buildTable(table);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                GUI gui = new GUI();
+                gui.buildTable(table);
+            }
+        });
     }
 }

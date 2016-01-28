@@ -14,8 +14,6 @@ public class ComboBoxListener implements ActionListener {
 
     public ComboBoxListener(GUI gui) {
         this.gui = gui;
-        gui.updater = new Thread(new TableUpdater(gui));
-        gui.updater.start();
     }
 
     @Override

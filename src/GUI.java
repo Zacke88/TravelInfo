@@ -46,6 +46,8 @@ public class GUI {
     private String themeColor = "White";
     private String searchFieldText = "Search";
 
+    private int comboIndex = 0;
+
     private TableRowSorter<TableModel> rowSorter;
 
     private JTable table;
@@ -71,6 +73,7 @@ public class GUI {
         String[] options = { "30min", "60min", "90min"};
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener(this));
+        comboBox.setSelectedIndex(comboIndex);
 
         searchField = new JTextField(searchFieldText);
         searchField.setColumns(12);
@@ -193,6 +196,8 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+        startThread();
 
     }
 
@@ -359,5 +364,14 @@ public class GUI {
 
     public void setTimer(int timer) {
         this.timer = timer;
+    }
+
+    /**
+     * Startar tråden som består av klassen TableUpdater vilket ser till att updatera tabellen med angivet tidsintervall
+     */
+    public void startThread() {
+
+        updater = new Thread(new TableUpdater(this));
+        updater.start();
     }
 }
