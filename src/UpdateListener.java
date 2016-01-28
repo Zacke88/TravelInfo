@@ -22,6 +22,10 @@ public class UpdateListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        gui.updater.interrupt();
+
+        /*
+
         ReadXML xml = new ReadXML();
         try {
             xml.readFile();
@@ -34,6 +38,8 @@ public class UpdateListener implements ActionListener {
         JTable table = new JTable(new OfferTable(xml.getList()));
 
         gui.rebuildTable(table);
+
+        */
 
     }
 }

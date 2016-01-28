@@ -10,9 +10,19 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public class TableUpdater implements Runnable {
 
+    private GUI gui;
+
+    public TableUpdater(GUI gui) {
+        this.gui = gui;
+    }
 
     @Override
     public void run() {
+
+        try {
+            Thread.sleep(gui.getTimer());
+        } catch (InterruptedException e) {
+        }
 
         ReadXML xml = new ReadXML();
         try {
@@ -25,7 +35,7 @@ public class TableUpdater implements Runnable {
 
         JTable table = new JTable(new OfferTable(xml.getList()));
 
-        GUI gui = new GUI();
-        gui.buildTable(table);
+        gui.rebuildTable(table);
+        this.run();
     }
 }

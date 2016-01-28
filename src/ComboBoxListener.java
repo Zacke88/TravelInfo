@@ -9,17 +9,31 @@ import java.awt.event.ActionListener;
  */
 public class ComboBoxListener implements ActionListener {
 
+    private GUI gui;
+
+    public ComboBoxListener(GUI gui) {
+        this.gui = gui;
+        gui.updater = new Thread(new TableUpdater(gui));
+        gui.updater.start();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource().toString().contains("30min")) {
             System.out.println("30");
+            gui.setTimer(3*60*1000);
+            //gui.updater.start();
         }
         if(e.getSource().toString().contains("60min")) {
             System.out.println("60");
+            gui.setTimer(60*60*1000);
+            //gui.updater.start();
         }
         if(e.getSource().toString().contains("90min")) {
             System.out.println("90");
+            gui.setTimer(90*60*1000);
+            //gui.updater.start();
         }
     }
 }

@@ -48,6 +48,10 @@ public class GUI {
 
     private JTable table;
 
+    private int timer = 1*60*1000;
+
+    public Thread updater;
+
     /**
      * Bygger den övre panalen till framen vilket består av olika val och filtreringar användaren kan göra
      *
@@ -64,7 +68,7 @@ public class GUI {
         // Options in the combobox
         String[] options = { "30min", "60min", "90min"};
         comboBox = new JComboBox(options);
-        comboBox.addActionListener(new ComboBoxListener());
+        comboBox.addActionListener(new ComboBoxListener(this));
 
         searchField = new JTextField("Search");
         searchField.setColumns(12);
@@ -277,9 +281,12 @@ public class GUI {
 
     /**
      * Bygger om tabellen för att updatera datat i denna
+     * Blir kallad på tråden som updaterar gui't med bestämda tidsintervall eller då man användaren manuellt updaterar
+     * via knappen i gui't. Metoden är synchronzed för att trådarna ej skall kunna krocka här
      *
      * @param table
      */
+    synchronized
     public void rebuildTable(JTable table) {
 
         scrollPane = new JScrollPane(table);
@@ -322,4 +329,11 @@ public class GUI {
         frame.pack();
     }
 
+    public int getTimer() {
+        return timer;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = timer;
+    }
 }
