@@ -43,6 +43,8 @@ public class GUI {
     private String imageURL = "";
     private String description = "";
     private String cityName = "";
+    private String themeColor = "White";
+    private String searchFieldText = "Search";
 
     private TableRowSorter<TableModel> rowSorter;
 
@@ -70,7 +72,7 @@ public class GUI {
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener(this));
 
-        searchField = new JTextField("Search");
+        searchField = new JTextField(searchFieldText);
         searchField.setColumns(12);
 
         updateButton = new JButton("Update");
@@ -206,9 +208,13 @@ public class GUI {
         file.add(exit);
         JMenu theme = new JMenu("Theme");
         menu.add(theme);
-        JMenuItem light = new JMenuItem("Neutral");
+        JMenuItem neutral = new JMenuItem("Neutral");
+        theme.add(neutral);
+        JMenuItem funky = new JMenuItem("Funky");
+        theme.add(funky);
+        JMenuItem light = new JMenuItem("Light");
         theme.add(light);
-        JMenuItem dark = new JMenuItem("Funky");
+        JMenuItem dark = new JMenuItem("Dark");
         theme.add(dark);
         JMenu help = new JMenu("Help");
         menu.add(help);
@@ -229,6 +235,22 @@ public class GUI {
             }
         }
 
+        class NeutralAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                upperPanel.setBackground(UIManager.getColor("Panel.background"));
+                lowerPanel.setBackground(UIManager.getColor("Panel.background"));
+            }
+        }
+
+        class FunkyAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                upperPanel.setBackground(Color.cyan);
+                lowerPanel.setBackground(Color.cyan);
+            }
+        }
+
         class LightAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -240,14 +262,16 @@ public class GUI {
         class DarkAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                upperPanel.setBackground(Color.cyan);
-                lowerPanel.setBackground(Color.cyan);
+                upperPanel.setBackground(Color.lightGray);
+                lowerPanel.setBackground(Color.lightGray);
 
             }
         }
 
         exit.addActionListener(new ExitAction());
         about.addActionListener(new AboutAction());
+        neutral.addActionListener(new NeutralAction());
+        funky.addActionListener(new FunkyAction());
         light.addActionListener(new LightAction());
         dark.addActionListener(new DarkAction());
     }
