@@ -21,25 +21,6 @@ public class UpdateListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         gui.updater.interrupt();
-
-        /*
-
-        ReadXML xml = new ReadXML();
-        try {
-            xml.readFile();
-        } catch (ParserConfigurationException e1) {
-            e1.printStackTrace();
-        } catch (SAXException e1) {
-            e1.printStackTrace();
-        }
-
-        JTable table = new JTable(new OfferTable(xml.getList()));
-
-        gui.rebuildTable(table);
-
-        */
-
     }
 }

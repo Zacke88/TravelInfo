@@ -11,15 +11,11 @@ import java.util.List;
 public class OfferTable extends AbstractTableModel {
 
     private int dataRows = 6;
-
     String[] columnNames = {"Destination", "Date", "Price", "Image", "City", "Description"};
-
     Object[][] data;
 
     public OfferTable(List<ModelOffers> list) {
-
         data = new Object[list.size()][dataRows];
-
         setData(list);
     }
 
@@ -68,9 +64,7 @@ public class OfferTable extends AbstractTableModel {
     }
 
     public void setData(List<ModelOffers> list) {
-
         for(int i = 0; i < list.size(); i++) {
-
             setValueAt(list.get(i).getDestinationName(), i, 0);
             setValueAt(list.get(i).getOutDate(), i, 1);
             setValueAt(list.get(i).getCurrentPrice(), i, 2);

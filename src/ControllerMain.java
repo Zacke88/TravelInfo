@@ -13,7 +13,6 @@ public class ControllerMain {
 
         ReadXML xml = new ReadXML();
         xml.readFile();
-
         JTable table = new JTable(new OfferTable(xml.getList()));
 
         SwingUtilities.invokeLater(() -> {

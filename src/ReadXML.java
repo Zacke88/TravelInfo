@@ -36,14 +36,14 @@ public class ReadXML {
         SAXParser saxParser = factory.newSAXParser();
         DefaultHandler handler = new DefaultHandler() {
 
-            boolean bCampaign = false;
-            boolean bDepaurte = false;
-            boolean bOutDate = false;
-            boolean bDestinationName = false;
-            boolean bHotelImage = false;
-            boolean bCurrentPrice = false;
-            boolean bCityName = false;
-            boolean bRoomDescription = false;
+            private boolean bCampaign = false;
+            private boolean bDepaurte = false;
+            private boolean bOutDate = false;
+            private boolean bDestinationName = false;
+            private boolean bHotelImage = false;
+            private boolean bCurrentPrice = false;
+            private boolean bCityName = false;
+            private boolean bRoomDescription = false;
 
             /**
              * Metoden kallas på varje gång parsern läser in en start-tagg '<' och identifierar vilken tagg den hittat
@@ -55,7 +55,6 @@ public class ReadXML {
              * @throws SAXException
              */
             public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-
                 if(qName.contentEquals("Offer")) {
                     model = new ModelOffers();
                 }
@@ -83,8 +82,7 @@ public class ReadXML {
                 if(qName.contentEquals("RoomDescription")) {
                     bRoomDescription = true;
                 }
-
-                }
+            }
 
             /**
              * Läser in data som finns i en huvudtagg
@@ -109,7 +107,6 @@ public class ReadXML {
              * @throws SAXException
              */
                 public void characters(char ch[], int start, int length) throws SAXException {
-
                     if(bCampaign) {
                         model.setCampaignName(new String(ch, start, length));
                         bCampaign = false;
@@ -146,6 +143,7 @@ public class ReadXML {
                     }
                 }
             };
+
         try {
             saxParser.parse(parseString, handler);
         } catch (IOException e) {

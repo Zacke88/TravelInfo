@@ -3,10 +3,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 /**
  * Created by id12jzn on 2016-01-18.
  *
@@ -16,13 +12,10 @@ import java.awt.event.ActionListener;
 public class SearchListener implements DocumentListener {
 
     private JTextField searchFilter;
-
     private TableRowSorter<TableModel> rowSorter;
 
     public SearchListener(JTable table, JTextField searchFilter) {
-
         this.searchFilter = searchFilter;
-
         rowSorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(rowSorter);
     }
@@ -52,7 +45,6 @@ public class SearchListener implements DocumentListener {
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

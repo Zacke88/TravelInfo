@@ -6,25 +6,25 @@
  */
 public class ModelOffers {
 
-    String campaignName;
-    String departureName;
-    String outDate;
-    String destinationName;
-    String cityName;
-    String roomDescription;
-    String journeyLength;
-    String flightExtern;
-    int currentPrice;
-    int originalPrice;
-    String priceCurrency;
-    String hotelName;
-    String hotelImage;
-    String hotelGrade;
-    String noOfSeatsRemaining;
-    String hotelGradeString;
-    String contentLink;
-    String bookLInk;
-    String journeyLengthWeeks;
+    private String campaignName;
+    private String departureName;
+    private String outDate;
+    private String destinationName;
+    private String cityName;
+    private String roomDescription;
+    private String journeyLength;
+    private String flightExtern;
+    private int currentPrice;
+    private int originalPrice;
+    private String priceCurrency;
+    private String hotelName;
+    private String hotelImage;
+    private String hotelGrade;
+    private String noOfSeatsRemaining;
+    private String hotelGradeString;
+    private String contentLink;
+    private String bookLInk;
+    private String journeyLengthWeeks;
 
     public String getCampaignName() {
         return campaignName;

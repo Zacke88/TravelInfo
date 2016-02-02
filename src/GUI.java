@@ -1,15 +1,11 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,57 +20,49 @@ import java.util.Properties;
 public class GUI {
 
     private JFrame frame = new JFrame();
-
     private JButton updateButton;
-
     private JPanel upperPanel;
     private JPanel rightPanel;
     private JPanel leftPanel;
     private JPanel lowerPanel;
-    private JLabel errorMessage;
-
+    private JLabel errorMessage = new JLabel();
     private JLabel time = new JLabel();
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     private JMenuBar menu = new JMenuBar();
     private JTextField searchField;
     private JComboBox comboBox;
     private JScrollPane scrollPane = new JScrollPane();
-
+    private JTable table;
+    private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     private String imageURL = "";
     private String description = "";
     private String cityName = "";
-    private String themeColor = "White";
+    private String themeColor = "neutral";
     private String searchFieldText = "Search";
-
     private int comboIndex = 0;
-
-    private TableRowSorter<TableModel> rowSorter;
-
-    private JTable table;
-
     private int timer = 1*60*1000;
-
+    private TableRowSorter<TableModel> rowSorter;
     public Thread updater;
+    private FileReader reader;
+    private FileWriter writer;
+    private Properties prop = new Properties();
 
-    FileReader reader;
-    Properties prop;
-
-
-    /** Constructor that reads the property file when the GUI is created
-     * If something goes wrong it catches the exceptions and writes an error message to the user
+    /** Konstructor som läser in property filen när GUI't skapas
+     * Går något fel fångar den upp exceptions och skriver ut felmeddelanden åt användaren
      *
      */
     public GUI() {
-
-        errorMessage = new JLabel();
         try {
             reader = new FileReader("prop");
             prop = new Properties();
             prop.load(reader);
+            themeColor = prop.getProperty("Theme");
+            comboIndex = Integer.parseInt(prop.getProperty("Combo"));
         } catch (FileNotFoundException e) {
             errorMessage.setText("<html><font color='red'>Properties file not found</font></html>");
         } catch (IOException e) {
             errorMessage.setText("<html><font color='red'>Could not read properties file</font></html>");
+        } catch (NumberFormatException e) {
+            errorMessage.setText("<html><font color='red'>Could not load all property-values</font></html>");
         }
     }
 
@@ -94,10 +82,8 @@ public class GUI {
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener(this));
         comboBox.setSelectedIndex(comboIndex);
-
         searchField = new JTextField(searchFieldText);
         searchField.setColumns(12);
-
         updateButton = new JButton("Update");
         updateButton.addActionListener(new UpdateListener(this));
 
@@ -118,7 +104,6 @@ public class GUI {
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
         rightPanel.setBorder(BorderFactory.createTitledBorder("Info"));
-
         JLabel label = new JLabel();
         JLabel image = new JLabel();
         JLabel infoText = new JLabel();
@@ -164,7 +149,6 @@ public class GUI {
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
         leftPanel.setLayout(new BorderLayout());
-        //leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         leftPanel.add(scrollPane);
 
@@ -178,13 +162,9 @@ public class GUI {
      */
     private JPanel buildLowerPanel() {
         JPanel lowerPanel = new JPanel();
-
         lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
         JLabel updated = new JLabel("Last updated: ");
-
         time.setText(sdf.format(new Date()));
-
         lowerPanel.add(updated);
         lowerPanel.add(time);
         lowerPanel.add(errorMessage);
@@ -197,21 +177,21 @@ public class GUI {
      */
     public void buildFrame() {
 
-        // Build panels
+        // Bygger panelerna och lägger till de i framen
         upperPanel = buildUpperPanel();
         rightPanel = buildRightPanel();
         leftPanel = buildLeftPanel();
         lowerPanel = buildLowerPanel();
-
-        //Add panels to the frame
         frame.add(upperPanel, BorderLayout.NORTH);
         frame.add(leftPanel, BorderLayout.WEST);
         frame.add(rightPanel, BorderLayout.EAST);
         frame.add(lowerPanel, BorderLayout.SOUTH);
 
+        // Bygger menyn
         buildMenu();
         frame.setJMenuBar(menu);
 
+        // Sätter frame inställningar
         frame.setTitle("Offers");
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -219,6 +199,10 @@ public class GUI {
         frame.setVisible(true);
         frame.setResizable(false);
 
+        // Laddar inställningar från properties-filen
+        loadProperties();
+
+        // Startar tråden som updaterar tabellen
         startThread();
 
     }
@@ -243,6 +227,12 @@ public class GUI {
         theme.add(light);
         JMenuItem dark = new JMenuItem("Dark");
         theme.add(dark);
+        JMenu settings = new JMenu("Properties");
+        menu.add(settings);
+        JMenuItem save = new JMenuItem("Save");
+        settings.add(save);
+        JMenuItem reset = new JMenuItem("Reset");
+        settings.add(reset);
         JMenu help = new JMenu("Help");
         menu.add(help);
         JMenuItem about = new JMenuItem("About");
@@ -252,6 +242,45 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        }
+
+        class SaveAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                prop.setProperty("Theme", themeColor);
+                prop.setProperty("Combo", Integer.toString(comboIndex));
+
+                try {
+                    writer = new FileWriter("prop");
+                    prop.store(writer, "Authur: id12jzn");
+                    writer.close();
+                } catch (IOException e1) {
+                    errorMessage.setText("<html><font color='red'>Could not write to properties file</font></html>");
+                }
+
+                JOptionPane.showMessageDialog(frame, "Current settings has been saved");
+            }
+        }
+
+        class ResetAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                themeColor = "neutral";
+                comboIndex = 0;
+                prop.setProperty("Theme", themeColor);
+                prop.setProperty("Combo", Integer.toString(comboIndex));
+
+                try {
+                    writer = new FileWriter("prop");
+                    prop.store(writer, "Authur: id12jzn");
+                    writer.close();
+                } catch (IOException e1) {
+                    errorMessage.setText("<html><font color='red'>Could not write to properties file</font></html>");
+                }
+
+                loadProperties();
+                JOptionPane.showMessageDialog(frame, "Settings has been reset");
             }
         }
 
@@ -265,33 +294,28 @@ public class GUI {
         class NeutralAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                upperPanel.setBackground(UIManager.getColor("Panel.background"));
-                lowerPanel.setBackground(UIManager.getColor("Panel.background"));
+                changeTheme("neutral");
             }
         }
 
         class FunkyAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                upperPanel.setBackground(Color.cyan);
-                lowerPanel.setBackground(Color.cyan);
+                changeTheme("cyan");
             }
         }
 
         class LightAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                upperPanel.setBackground(Color.white);
-                lowerPanel.setBackground(Color.white);
+                changeTheme("white");
             }
         }
 
         class DarkAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                upperPanel.setBackground(Color.lightGray);
-                lowerPanel.setBackground(Color.lightGray);
-
+                changeTheme("gray");
             }
         }
 
@@ -301,6 +325,8 @@ public class GUI {
         funky.addActionListener(new FunkyAction());
         light.addActionListener(new LightAction());
         dark.addActionListener(new DarkAction());
+        save.addActionListener(new SaveAction());
+        reset.addActionListener(new ResetAction());
     }
 
     /**
@@ -384,8 +410,9 @@ public class GUI {
         return timer;
     }
 
-    public void setTimer(int timer) {
+    public void setTimer(int timer, int comboIndex) {
         this.timer = timer;
+        this.comboIndex = comboIndex;
     }
 
     /**
@@ -395,5 +422,41 @@ public class GUI {
 
         updater = new Thread(new TableUpdater(this));
         updater.start();
+    }
+
+    /**
+     * Ändrar det nuvarande färg-temat för framen
+     *
+     * @param color
+     */
+    public void changeTheme(String color) {
+        if(color.equals("neutral")) {
+            themeColor = "neutral";
+            upperPanel.setBackground(UIManager.getColor("Panel.background"));
+            lowerPanel.setBackground(UIManager.getColor("Panel.background"));
+        }
+        if(color.equals("cyan")) {
+            themeColor = "cyan";
+            upperPanel.setBackground(Color.cyan);
+            lowerPanel.setBackground(Color.cyan);
+        }
+        if(color.equals("white")) {
+            themeColor = "white";
+            upperPanel.setBackground(Color.white);
+            lowerPanel.setBackground(Color.white);
+        }
+        if(color.equals("gray")) {
+            themeColor = "gray";
+            upperPanel.setBackground(Color.lightGray);
+            lowerPanel.setBackground(Color.lightGray);
+        }
+    }
+
+    /**
+     * Laddar inställningar från properties-filen
+     */
+    public void loadProperties() {
+        changeTheme(themeColor);
+        comboBox.setSelectedIndex(comboIndex);
     }
 }

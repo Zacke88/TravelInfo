@@ -18,13 +18,12 @@ public class TableUpdater implements Runnable {
 
     @Override
     public void run() {
-
         try {
             Thread.sleep(gui.getTimer());
-        } catch (InterruptedException e) {
-        }
+        } catch (InterruptedException e) {}
 
         ReadXML xml = new ReadXML();
+
         try {
             xml.readFile();
         } catch (ParserConfigurationException e) {
@@ -34,7 +33,6 @@ public class TableUpdater implements Runnable {
         }
 
         JTable table = new JTable(new OfferTable(xml.getList()));
-
         gui.rebuildTable(table);
         this.run();
     }

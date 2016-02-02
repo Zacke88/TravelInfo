@@ -11,22 +11,20 @@ import java.awt.event.ActionListener;
 public class ComboBoxListener implements ActionListener {
 
     private GUI gui;
-
     public ComboBoxListener(GUI gui) {
         this.gui = gui;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if(e.getSource().toString().contains("30min")) {
-            gui.setTimer(30*60*1000);
+            gui.setTimer(30*60*1000, 0);
         }
         if(e.getSource().toString().contains("60min")) {
-            gui.setTimer(60*60*1000);
+            gui.setTimer(60*60*1000, 1);
         }
         if(e.getSource().toString().contains("90min")) {
-            gui.setTimer(90*60*1000);
+            gui.setTimer(90*60*1000, 2);
         }
     }
 }
