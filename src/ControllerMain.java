@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.io.FileReader;
+import java.util.Properties;
 
 /**
  * Created by Zacke on 2016-01-18.
@@ -14,11 +16,9 @@ public class ControllerMain {
 
         JTable table = new JTable(new OfferTable(xml.getList()));
 
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                GUI gui = new GUI();
-                gui.buildTable(table);
-            }
+        SwingUtilities.invokeLater(() -> {
+            GUI gui = new GUI();
+            gui.buildTable(table);
         });
     }
 }

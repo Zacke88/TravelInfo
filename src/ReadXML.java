@@ -18,8 +18,9 @@ import java.util.List;
  */
 public class ReadXML {
 
-    List offers = new ArrayList<ModelOffers>();
-    ModelOffers model;
+    private List offers = new ArrayList<ModelOffers>();
+    private ModelOffers model;
+    private String parseString = "http://www.fritidsresor.se/Blandade-Sidor/feeds/tradera/";
 
     /**
      * Läser in data genom en SAXParser
@@ -29,14 +30,10 @@ public class ReadXML {
      */
     public void readFile() throws ParserConfigurationException, SAXException {
 
-        // SAX Parser
+        // SAX Parser and default handler
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setNamespaceAware(true);
-
-        //Obtain objext for parser
         SAXParser saxParser = factory.newSAXParser();
-
-        // Default handler for SAX
         DefaultHandler handler = new DefaultHandler() {
 
             boolean bCampaign = false;
@@ -134,7 +131,6 @@ public class ReadXML {
                         bHotelImage = false;
                     }
                     if(bCurrentPrice) {
-                        //model.setCurrentPrice(Integer.parseInt(new String(ch, start, length).split("\\s+")));
                         String price = new String(ch, start, length);
                         String priceString[] = price.split("\\s+");
                         model.setCurrentPrice(Integer.parseInt(priceString[0]));
@@ -151,7 +147,7 @@ public class ReadXML {
                 }
             };
         try {
-            saxParser.parse("131209_15-55-00.xml", handler);
+            saxParser.parse(parseString, handler);
         } catch (IOException e) {
             e.printStackTrace();
         }

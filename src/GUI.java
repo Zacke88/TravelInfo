@@ -7,10 +7,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * Created by id12jzn on 2016-01-18.
@@ -28,16 +31,13 @@ public class GUI {
     private JPanel rightPanel;
     private JPanel leftPanel;
     private JPanel lowerPanel;
+    private JLabel errorMessage;
 
     private JLabel time = new JLabel();
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-
     private JMenuBar menu = new JMenuBar();
-
     private JTextField searchField;
-
     private JComboBox comboBox;
-
     private JScrollPane scrollPane = new JScrollPane();
 
     private String imageURL = "";
@@ -56,6 +56,28 @@ public class GUI {
 
     public Thread updater;
 
+    FileReader reader;
+    Properties prop;
+
+
+    /** Constructor that reads the property file when the GUI is created
+     * If something goes wrong it catches the exceptions and writes an error message to the user
+     *
+     */
+    public GUI() {
+
+        errorMessage = new JLabel();
+        try {
+            reader = new FileReader("prop");
+            prop = new Properties();
+            prop.load(reader);
+        } catch (FileNotFoundException e) {
+            errorMessage.setText("<html><font color='red'>Properties file not found</font></html>");
+        } catch (IOException e) {
+            errorMessage.setText("<html><font color='red'>Could not read properties file</font></html>");
+        }
+    }
+
     /**
      * Bygger den övre panalen till framen vilket består av olika val och filtreringar användaren kan göra
      *
@@ -66,10 +88,8 @@ public class GUI {
         upperPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
         upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        // Combobox
+        // Skapar Combo-boxen samt val för denna
         JLabel labelCombo = new JLabel("Set update interval: ");
-
-        // Options in the combobox
         String[] options = { "30min", "60min", "90min"};
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener(this));
@@ -167,6 +187,7 @@ public class GUI {
 
         lowerPanel.add(updated);
         lowerPanel.add(time);
+        lowerPanel.add(errorMessage);
 
         return lowerPanel;
     }
@@ -196,6 +217,7 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setResizable(false);
 
         startThread();
 
