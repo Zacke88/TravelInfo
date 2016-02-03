@@ -343,9 +343,8 @@ public class GUI {
 
     /**
      * Har en tabell som inparameter vilket skapas utanför GUI-klassen för
-     * att sedan lägga till en scroll för denna
-     * och välja vilka koolumner som skall visas för att tillslut visa deni
-     * rätt panel
+     * att sedan lägga till en scroll för denna och välja vilka koolumner som
+     * skall visas för att tillslut visa den i rätt panel
      *
      * @param table
      */
@@ -412,7 +411,6 @@ public class GUI {
      * @param row
      */
     public void updateInfo(int row) {
-
         System.out.println(table.getModel().getValueAt(table
                 .convertRowIndexToModel(row), 3));
         imageURL = table.getModel().getValueAt(table.convertRowIndexToModel
