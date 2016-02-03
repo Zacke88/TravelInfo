@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.management.Query;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -183,7 +184,6 @@ public class GUI {
      * Bygger upp själva framen och lägger till samtliga paneler som tillhör den
      */
     public void buildFrame() {
-
         // Bygger panelerna och lägger till de i framen
         upperPanel = buildUpperPanel();
         rightPanel = buildRightPanel();
@@ -199,7 +199,7 @@ public class GUI {
         frame.setJMenuBar(menu);
 
         // Sätter frame inställningar
-        frame.setTitle("Offers");
+        frame.setTitle("Travel Info");
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -216,7 +216,7 @@ public class GUI {
 
     /**
      * Bygger upp menyraden som finns upptill på framen där användaren kan
-     * göra de val som läggs till
+     * göra de val som läggs till.
      * Innehar också lyssnare för samtliga menyval
      */
     public void buildMenu() {
@@ -235,7 +235,7 @@ public class GUI {
         theme.add(light);
         JMenuItem dark = new JMenuItem("Dark");
         theme.add(dark);
-        JMenu settings = new JMenu("Properties");
+        JMenu settings = new JMenu("Settings");
         menu.add(settings);
         JMenuItem save = new JMenuItem("Save");
         settings.add(save);
@@ -246,6 +246,9 @@ public class GUI {
         JMenuItem about = new JMenuItem("About");
         help.add(about);
 
+        /**
+         * Lyssnare som avslutar programmet
+         */
         class ExitAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -253,6 +256,10 @@ public class GUI {
             }
         }
 
+        /**
+         * Lyssnare för att spara inställningar användaren gjort i en
+         * properties-fil
+         */
         class SaveAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -273,6 +280,10 @@ public class GUI {
             }
         }
 
+        /**
+         * Lyssnare för att återställa standardinställningar och ändra till
+         * dessa värden i properties-filen
+         */
         class ResetAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -295,6 +306,10 @@ public class GUI {
             }
         }
 
+        /**
+         * Lyssnare som öppnar en popup-ruta där användaren kan läsa mer om
+         * vem som skapar programmet.
+         */
         class AboutAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -303,6 +318,9 @@ public class GUI {
             }
         }
 
+        /**
+         * Lyssnare för att ändra färgtema
+         */
         class NeutralAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -310,6 +328,9 @@ public class GUI {
             }
         }
 
+        /**
+         * Lyssnare för att ändra färgtema
+         */
         class FunkyAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -317,6 +338,9 @@ public class GUI {
             }
         }
 
+        /**
+         * Lyssnare för att ändra färgtema
+         */
         class LightAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -324,6 +348,9 @@ public class GUI {
             }
         }
 
+        /**
+         * Lyssnare för att ändra färgtema
+         */
         class DarkAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -349,7 +376,6 @@ public class GUI {
      * @param table
      */
     public void buildTable(JTable table) {
-
         scrollPane = new JScrollPane(table);
 
         table.removeColumn(table.getColumnModel().getColumn(5));
@@ -369,17 +395,16 @@ public class GUI {
 
 
     /**
-     * Bygger om tabellen för att updatera datat i denna
+     * Bygger om tabellen för att updatera datat i denna.
      * Blir kallad på tråden som updaterar gui't med bestämda tidsintervall
      * eller då man användaren manuellt updaterar
-     * via knappen i gui't. Metoden är synchronzed för att trådarna ej skall
-     * kunna krocka här
+     * via knappen i gui't.
+     * Metoden är synchronzed för att trådarna ej skall kunna krocka här
      *
      * @param table
      */
     synchronized
     public void rebuildTable(JTable table) {
-
         scrollPane = new JScrollPane(table);
         table.removeColumn(table.getColumnModel().getColumn(5));
         table.removeColumn(table.getColumnModel().getColumn(4));
