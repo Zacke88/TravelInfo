@@ -4,8 +4,9 @@ import java.util.Properties;
 
 /**
  * Created by Zacke on 2016-01-18.
- *
- * Controller för programmet vilken knyter ihop vyn med modellen samt fungerar som en main-klass
+ * <p>
+ * Controller för programmet vilken knyter ihop vyn med modellen samt
+ * fungerar som en main-klass
  */
 public class ControllerMain {
 

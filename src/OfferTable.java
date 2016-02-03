@@ -3,15 +3,18 @@ import java.util.List;
 
 /**
  * Created by id12jzn on 2016-01-18.
- *
- * Bygger upp tabellen för GUI't som består av samtliga offers programmet läst in
- * Här anges vilka kolumner som finns i tabellen och data läggs ttill enligt listan med alla offers som tas in i
+ * <p>
+ * Bygger upp tabellen för GUI't som består av samtliga offers programmet
+ * läst in
+ * Här anges vilka kolumner som finns i tabellen och data läggs ttill enligt
+ * listan med alla offers som tas in i
  * konstruktorn. Metoder finns för att sätta samt hämta data och kolumner
  */
 public class OfferTable extends AbstractTableModel {
 
     private int dataRows = 6;
-    String[] columnNames = {"Destination", "Date", "Price", "Image", "City", "Description"};
+    String[] columnNames = {"Destination", "Date", "Price", "Image", "City",
+            "Description"};
     Object[][] data;
 
     public OfferTable(List<ModelOffers> list) {
@@ -41,7 +44,7 @@ public class OfferTable extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch(columnIndex){
+        switch (columnIndex) {
             case 0:
                 return String.class;
             case 1:
@@ -64,7 +67,7 @@ public class OfferTable extends AbstractTableModel {
     }
 
     public void setData(List<ModelOffers> list) {
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             setValueAt(list.get(i).getDestinationName(), i, 0);
             setValueAt(list.get(i).getOutDate(), i, 1);
             setValueAt(list.get(i).getCurrentPrice(), i, 2);

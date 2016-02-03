@@ -5,8 +5,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by id12jzn on 2016-01-25.
- *
- * En klass som kan köras som en tråd vilket updaterar tabellen i GUI't efter ett angivet intervall
+ * <p>
+ * En klass som kan köras som en tråd vilket updaterar tabellen i GUI't efter
+ * ett angivet intervall
  */
 public class TableUpdater implements Runnable {
 
@@ -20,7 +21,8 @@ public class TableUpdater implements Runnable {
     public void run() {
         try {
             Thread.sleep(gui.getTimer());
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+        }
 
         ReadXML xml = new ReadXML();
 

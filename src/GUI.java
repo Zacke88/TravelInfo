@@ -13,8 +13,9 @@ import java.util.Properties;
 
 /**
  * Created by id12jzn on 2016-01-18.
- *
- * GUI-klass som bygger upp hela vyn för programmet. Den bygger en frame vilket sedan består av en BorderlLayout.
+ * <p>
+ * GUI-klass som bygger upp hela vyn för programmet. Den bygger en frame
+ * vilket sedan består av en BorderlLayout.
  * Denna frame består av olika paneler som placeras ut enligt layouten
  */
 public class GUI {
@@ -39,16 +40,17 @@ public class GUI {
     private String themeColor = "neutral";
     private String searchFieldText = "Search";
     private int comboIndex = 0;
-    private int timer = 1*60*1000;
+    private int timer = 1 * 60 * 1000;
     private TableRowSorter<TableModel> rowSorter;
     public Thread updater;
     private FileReader reader;
     private FileWriter writer;
     private Properties prop = new Properties();
 
-    /** Konstructor som läser in property filen när GUI't skapas
-     * Går något fel fångar den upp exceptions och skriver ut felmeddelanden åt användaren
-     *
+    /**
+     * Konstructor som läser in property filen när GUI't skapas
+     * Går något fel fångar den upp exceptions och skriver ut felmeddelanden
+     * åt användaren
      */
     public GUI() {
         try {
@@ -58,16 +60,20 @@ public class GUI {
             themeColor = prop.getProperty("Theme");
             comboIndex = Integer.parseInt(prop.getProperty("Combo"));
         } catch (FileNotFoundException e) {
-            errorMessage.setText("<html><font color='red'>Properties file not found</font></html>");
+            errorMessage.setText("<html><font color='red'>Properties file not" +
+                    " found</font></html>");
         } catch (IOException e) {
-            errorMessage.setText("<html><font color='red'>Could not read properties file</font></html>");
+            errorMessage.setText("<html><font color='red'>Could not read " +
+                    "properties file</font></html>");
         } catch (NumberFormatException e) {
-            errorMessage.setText("<html><font color='red'>Could not load all property-values</font></html>");
+            errorMessage.setText("<html><font color='red'>Could not load all " +
+                    "property-values</font></html>");
         }
     }
 
     /**
-     * Bygger den övre panalen till framen vilket består av olika val och filtreringar användaren kan göra
+     * Bygger den övre panalen till framen vilket består av olika val och
+     * filtreringar användaren kan göra
      *
      * @return en JPanel av panale som byggts
      */
@@ -78,7 +84,7 @@ public class GUI {
 
         // Skapar Combo-boxen samt val för denna
         JLabel labelCombo = new JLabel("Set update interval: ");
-        String[] options = { "30min", "60min", "90min"};
+        String[] options = {"30min", "60min", "90min"};
         comboBox = new JComboBox(options);
         comboBox.addActionListener(new ComboBoxListener(this));
         comboBox.setSelectedIndex(comboIndex);
@@ -96,7 +102,8 @@ public class GUI {
     }
 
     /**
-     * Bygger den högra panelen till framen vilket består av info för den rad i tabellen som är markerad
+     * Bygger den högra panelen till framen vilket består av info för den rad
+     * i tabellen som är markerad
      *
      * @return en JPanel av panale som byggts
      */
@@ -108,10 +115,9 @@ public class GUI {
         JLabel image = new JLabel();
         JLabel infoText = new JLabel();
 
-        if(imageURL.equals("")) {
+        if (imageURL.equals("")) {
             label.setText("Select item in list to show more info");
-        }
-        else {
+        } else {
             try {
                 image.setIcon(new ImageIcon(ImageIO.read(new URL(imageURL))));
             } catch (IOException e) {
@@ -119,16 +125,16 @@ public class GUI {
             }
         }
 
-        if(imageURL.contains("Default")) {
+        if (imageURL.contains("Default")) {
             label.setText("No hotel image available");
         }
 
-        if(!cityName.equals("") || !description.equals("")) {
-            infoText.setText("City: " + cityName + "   Description: " + description);
+        if (!cityName.equals("") || !description.equals("")) {
+            infoText.setText("City: " + cityName + "   Description: " +
+                    description);
             cityName = "";
             description = "";
-        }
-        else {
+        } else {
             infoText.setText("");
         }
 
@@ -140,7 +146,8 @@ public class GUI {
     }
 
     /**
-     * Bygger den vänstra panelen till framen vilket består av tabellen som visar en lista över alla Offers
+     * Bygger den vänstra panelen till framen vilket består av tabellen som
+     * visar en lista över alla Offers
      * Denna tabell går att sortera
      *
      * @return en JPanel av panale som byggts
@@ -208,7 +215,8 @@ public class GUI {
     }
 
     /**
-     * Bygger upp menyraden som finns upptill på framen där användaren kan göra de val som läggs till
+     * Bygger upp menyraden som finns upptill på framen där användaren kan
+     * göra de val som läggs till
      * Innehar också lyssnare för samtliga menyval
      */
     public void buildMenu() {
@@ -256,10 +264,12 @@ public class GUI {
                     prop.store(writer, "Authur: id12jzn");
                     writer.close();
                 } catch (IOException e1) {
-                    errorMessage.setText("<html><font color='red'>Could not write to properties file</font></html>");
+                    errorMessage.setText("<html><font color='red'>Could not " +
+                            "write to properties file</font></html>");
                 }
 
-                JOptionPane.showMessageDialog(frame, "Current settings has been saved");
+                JOptionPane.showMessageDialog(frame, "Current settings has " +
+                        "been saved");
             }
         }
 
@@ -276,7 +286,8 @@ public class GUI {
                     prop.store(writer, "Authur: id12jzn");
                     writer.close();
                 } catch (IOException e1) {
-                    errorMessage.setText("<html><font color='red'>Could not write to properties file</font></html>");
+                    errorMessage.setText("<html><font color='red'>Could not " +
+                            "write to properties file</font></html>");
                 }
 
                 loadProperties();
@@ -287,7 +298,8 @@ public class GUI {
         class AboutAction implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Made by Joakim Zakrisson ( id12jzn)");
+                JOptionPane.showMessageDialog(frame, "Made by Joakim " +
+                        "Zakrisson ( id12jzn)");
             }
         }
 
@@ -330,8 +342,10 @@ public class GUI {
     }
 
     /**
-     * Har en tabell som inparameter vilket skapas utanför GUI-klassen för att sedan lägga till en scroll för denna
-     * och välja vilka koolumner som skall visas för att tillslut visa deni rätt panel
+     * Har en tabell som inparameter vilket skapas utanför GUI-klassen för
+     * att sedan lägga till en scroll för denna
+     * och välja vilka koolumner som skall visas för att tillslut visa deni
+     * rätt panel
      *
      * @param table
      */
@@ -342,24 +356,25 @@ public class GUI {
         table.removeColumn(table.getColumnModel().getColumn(5));
         table.removeColumn(table.getColumnModel().getColumn(4));
         table.removeColumn(table.getColumnModel().getColumn(3));
-
         table.setAutoCreateRowSorter(true);
 
         buildFrame();
 
-        searchField.getDocument().addDocumentListener(new SearchListener(table, searchField));
-        table.getSelectionModel().addListSelectionListener(new TableSelectionListener(this));
-
+        searchField.getDocument().addDocumentListener(new SearchListener
+                (table, searchField));
+        table.getSelectionModel().addListSelectionListener(new
+                TableSelectionListener(this));
         this.table = table;
-
         time.setText(sdf.format(new Date()));
     }
 
 
     /**
      * Bygger om tabellen för att updatera datat i denna
-     * Blir kallad på tråden som updaterar gui't med bestämda tidsintervall eller då man användaren manuellt updaterar
-     * via knappen i gui't. Metoden är synchronzed för att trådarna ej skall kunna krocka här
+     * Blir kallad på tråden som updaterar gui't med bestämda tidsintervall
+     * eller då man användaren manuellt updaterar
+     * via knappen i gui't. Metoden är synchronzed för att trådarna ej skall
+     * kunna krocka här
      *
      * @param table
      */
@@ -381,25 +396,31 @@ public class GUI {
         frame.add(rightPanel, BorderLayout.EAST);
         frame.pack();
 
-        searchField.getDocument().addDocumentListener(new SearchListener(table, searchField));
-        table.getSelectionModel().addListSelectionListener(new TableSelectionListener(this));
-
-
+        searchField.getDocument().addDocumentListener(new SearchListener
+                (table, searchField));
+        table.getSelectionModel().addListSelectionListener(new
+                TableSelectionListener(this));
         time.setText(sdf.format(new Date()));
     }
 
     /**
-     * Updaterar infot som visas i den högra panelen, bör kallas på då användaren trycker på en ny rad i tabellen
-     * Har ett radnummer som inparameter så den vet vilket erbjudande den skall visa information för
+     * Updaterar infot som visas i den högra panelen, bör kallas på då
+     * användaren trycker på en ny rad i tabellen
+     * Har ett radnummer som inparameter så den vet vilket erbjudande den
+     * skall visa information för
      *
      * @param row
      */
     public void updateInfo(int row) {
 
-        System.out.println(table.getModel().getValueAt(table.convertRowIndexToModel(row), 3));
-        imageURL = table.getModel().getValueAt(table.convertRowIndexToModel(row), 3).toString();
-        cityName = table.getModel().getValueAt(table.convertRowIndexToModel(row), 4).toString();
-        description = table.getModel().getValueAt(table.convertRowIndexToModel(row), 5).toString();
+        System.out.println(table.getModel().getValueAt(table
+                .convertRowIndexToModel(row), 3));
+        imageURL = table.getModel().getValueAt(table.convertRowIndexToModel
+                (row), 3).toString();
+        cityName = table.getModel().getValueAt(table.convertRowIndexToModel
+                (row), 4).toString();
+        description = table.getModel().getValueAt(table
+                .convertRowIndexToModel(row), 5).toString();
         frame.remove(rightPanel);
         rightPanel = buildRightPanel();
         frame.add(rightPanel, BorderLayout.EAST);
@@ -416,10 +437,10 @@ public class GUI {
     }
 
     /**
-     * Startar tråden som består av klassen TableUpdater vilket ser till att updatera tabellen med angivet tidsintervall
+     * Startar tråden som består av klassen TableUpdater vilket ser till att
+     * updatera tabellen med angivet tidsintervall
      */
     public void startThread() {
-
         updater = new Thread(new TableUpdater(this));
         updater.start();
     }
@@ -430,22 +451,22 @@ public class GUI {
      * @param color
      */
     public void changeTheme(String color) {
-        if(color.equals("neutral")) {
+        if (color.equals("neutral")) {
             themeColor = "neutral";
             upperPanel.setBackground(UIManager.getColor("Panel.background"));
             lowerPanel.setBackground(UIManager.getColor("Panel.background"));
         }
-        if(color.equals("cyan")) {
+        if (color.equals("cyan")) {
             themeColor = "cyan";
             upperPanel.setBackground(Color.cyan);
             lowerPanel.setBackground(Color.cyan);
         }
-        if(color.equals("white")) {
+        if (color.equals("white")) {
             themeColor = "white";
             upperPanel.setBackground(Color.white);
             lowerPanel.setBackground(Color.white);
         }
-        if(color.equals("gray")) {
+        if (color.equals("gray")) {
             themeColor = "gray";
             upperPanel.setBackground(Color.lightGray);
             lowerPanel.setBackground(Color.lightGray);

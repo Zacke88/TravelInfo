@@ -3,10 +3,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
 /**
  * Created by id12jzn on 2016-01-18.
- *
- * Lyssnare för sökfältet i GUI't, en form av docemtlistener som updaterar tabellen baserat på vad som skrivits in
+ * <p>
+ * Lyssnare för sökfältet i GUI't, en form av docemtlistener som updaterar
+ * tabellen baserat på vad som skrivits in
  * eftersom det skrivs. Den söker i samtliga kolumner som syns i tabellen
  */
 public class SearchListener implements DocumentListener {

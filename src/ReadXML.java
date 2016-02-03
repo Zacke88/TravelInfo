@@ -12,15 +12,17 @@ import java.util.List;
 
 /**
  * Created by id12jzn on 2016-01-10.
- *
- * Denna klass läser in data från en xml-fil/sida från angivna taggar. Den sparar datat i ModelOffers-klassen och
+ * <p>
+ * Denna klass läser in data från en xml-fil/sida från angivna taggar. Den
+ * sparar datat i ModelOffers-klassen och
  * skapar en lista av alla Offers den har läst in
  */
 public class ReadXML {
 
     private List offers = new ArrayList<ModelOffers>();
     private ModelOffers model;
-    private String parseString = "http://www.fritidsresor.se/Blandade-Sidor/feeds/tradera/";
+    private String parseString = "http://www.fritidsresor" +
+            ".se/Blandade-Sidor/feeds/tradera/";
 
     /**
      * Läser in data genom en SAXParser
@@ -46,7 +48,8 @@ public class ReadXML {
             private boolean bRoomDescription = false;
 
             /**
-             * Metoden kallas på varje gång parsern läser in en start-tagg '<' och identifierar vilken tagg den hittat
+             * Metoden kallas på varje gång parsern läser in en start-tagg
+             * '<' och identifierar vilken tagg den hittat
              *
              * @param uri
              * @param localName
@@ -54,32 +57,33 @@ public class ReadXML {
              * @param attributes
              * @throws SAXException
              */
-            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-                if(qName.contentEquals("Offer")) {
+            public void startElement(String uri, String localName, String
+                    qName, Attributes attributes) throws SAXException {
+                if (qName.contentEquals("Offer")) {
                     model = new ModelOffers();
                 }
-                if(qName.contentEquals("CampaignName")) {
+                if (qName.contentEquals("CampaignName")) {
                     bCampaign = true;
                 }
-                if(qName.contentEquals("DepartureName")) {
+                if (qName.contentEquals("DepartureName")) {
                     bDepaurte = true;
                 }
-                if(qName.contentEquals("OutDate")) {
+                if (qName.contentEquals("OutDate")) {
                     bOutDate = true;
                 }
-                if(qName.contentEquals("DestinationName")) {
+                if (qName.contentEquals("DestinationName")) {
                     bDestinationName = true;
                 }
-                if(qName.contentEquals("HotelImage")) {
+                if (qName.contentEquals("HotelImage")) {
                     bHotelImage = true;
                 }
-                if(qName.contentEquals("CurrentPrice")) {
+                if (qName.contentEquals("CurrentPrice")) {
                     bCurrentPrice = true;
                 }
-                if(qName.contentEquals("CityName")) {
+                if (qName.contentEquals("CityName")) {
                     bCityName = true;
                 }
-                if(qName.contentEquals("RoomDescription")) {
+                if (qName.contentEquals("RoomDescription")) {
                     bRoomDescription = true;
                 }
             }
@@ -92,8 +96,9 @@ public class ReadXML {
              * @param qName
              * @throws SAXException
              */
-            public void endElement(String uri, String localName, String qName) throws SAXException {
-                if(qName.contentEquals("Offer")) {
+            public void endElement(String uri, String localName, String
+                    qName) throws SAXException {
+                if (qName.contentEquals("Offer")) {
                     offers.add(model);
                 }
             }
@@ -106,43 +111,44 @@ public class ReadXML {
              * @param length
              * @throws SAXException
              */
-                public void characters(char ch[], int start, int length) throws SAXException {
-                    if(bCampaign) {
-                        model.setCampaignName(new String(ch, start, length));
-                        bCampaign = false;
-                    }
-                    if(bDepaurte) {
-                        model.setDepartureName(new String(ch, start, length));
-                        bDepaurte = false;
-                    }
-                    if(bOutDate) {
-                        model.setOutDate(new String(ch, start, length));
-                        bOutDate = false;
-                    }
-                    if(bDestinationName) {
-                        model.setDestinationName(new String(ch, start, length));
-                        bDestinationName = false;
-                    }
-                    if(bHotelImage) {
-                        model.setHotelImage(new String(ch, start, length));
-                        bHotelImage = false;
-                    }
-                    if(bCurrentPrice) {
-                        String price = new String(ch, start, length);
-                        String priceString[] = price.split("\\s+");
-                        model.setCurrentPrice(Integer.parseInt(priceString[0]));
-                        bCurrentPrice = false;
-                    }
-                    if(bCityName) {
-                        model.setCityName(new String(ch, start, length));
-                        bCityName = false;
-                    }
-                    if(bRoomDescription) {
-                        model.setRoomDescription(new String(ch, start, length));
-                        bRoomDescription = false;
-                    }
+            public void characters(char ch[], int start, int length) throws
+                    SAXException {
+                if (bCampaign) {
+                    model.setCampaignName(new String(ch, start, length));
+                    bCampaign = false;
                 }
-            };
+                if (bDepaurte) {
+                    model.setDepartureName(new String(ch, start, length));
+                    bDepaurte = false;
+                }
+                if (bOutDate) {
+                    model.setOutDate(new String(ch, start, length));
+                    bOutDate = false;
+                }
+                if (bDestinationName) {
+                    model.setDestinationName(new String(ch, start, length));
+                    bDestinationName = false;
+                }
+                if (bHotelImage) {
+                    model.setHotelImage(new String(ch, start, length));
+                    bHotelImage = false;
+                }
+                if (bCurrentPrice) {
+                    String price = new String(ch, start, length);
+                    String priceString[] = price.split("\\s+");
+                    model.setCurrentPrice(Integer.parseInt(priceString[0]));
+                    bCurrentPrice = false;
+                }
+                if (bCityName) {
+                    model.setCityName(new String(ch, start, length));
+                    bCityName = false;
+                }
+                if (bRoomDescription) {
+                    model.setRoomDescription(new String(ch, start, length));
+                    bRoomDescription = false;
+                }
+            }
+        };
 
         try {
             saxParser.parse(parseString, handler);

@@ -8,8 +8,9 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by id12jzn on 2016-01-25.
- *
- * Lyssnare till update-knappen vilket läser in datat från XMLen och updaterar tabellen som visas i GUI't
+ * <p>
+ * Lyssnare till update-knappen vilket läser in datat från XMLen och
+ * updaterar tabellen som visas i GUI't
  */
 public class UpdateListener implements ActionListener {
 
