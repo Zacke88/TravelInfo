@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.util.Properties;
 
 /**
- * Created by Zacke on 2016-01-18.
+ * Created by id12jzn on 2016-01-18.
  * <p>
  * Controller för programmet vilken knyter ihop vyn med modellen samt
  * fungerar som en main-klass
