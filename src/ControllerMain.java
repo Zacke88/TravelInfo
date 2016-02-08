@@ -1,5 +1,9 @@
+import org.xml.sax.SAXException;
+
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -14,6 +18,7 @@ public class ControllerMain {
 
         ReadXML xml = new ReadXML();
         xml.readFile();
+
         JTable table = new JTable(new OfferTable(xml.getList()));
 
         SwingUtilities.invokeLater(() -> {

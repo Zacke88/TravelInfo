@@ -32,7 +32,8 @@ public class ReadXML {
      * @throws ParserConfigurationException
      * @throws SAXException
      */
-    public void readFile() throws ParserConfigurationException, SAXException {
+    public void readFile() throws ParserConfigurationException, SAXException,
+            IOException {
 
         // SAX Parser and default handler
         SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -152,11 +153,8 @@ public class ReadXML {
             }
         };
 
-        try {
-            saxParser.parse(parseString, handler);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saxParser.parse(parseString, handler);
+
     }
 
     public List<ModelOffers> getList() {

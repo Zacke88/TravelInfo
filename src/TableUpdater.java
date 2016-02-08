@@ -2,6 +2,7 @@ import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 /**
  * Created by id12jzn on 2016-01-25.
@@ -29,9 +30,12 @@ public class TableUpdater implements Runnable {
         try {
             xml.readFile();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            gui.errorMessage.setText("<html><font-color 'red'>Parser Error</font></html>");
         } catch (SAXException e) {
-            e.printStackTrace();
+            gui.errorMessage.setText("<html><font-color 'red'>Sax Error</font></html>");
+        } catch (IOException e) {
+            gui.errorMessage.setText("<html><font-color 'red'>IO " +
+                    "Error</font></html>");
         }
 
         JTable table = new JTable(new OfferTable(xml.getList()));

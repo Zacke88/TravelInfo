@@ -27,7 +27,7 @@ public class GUI {
     private JPanel rightPanel;
     private JPanel leftPanel;
     private JPanel lowerPanel;
-    private JLabel errorMessage = new JLabel();
+    public JLabel errorMessage = new JLabel();
     private JLabel time = new JLabel();
     private JMenuBar menu = new JMenuBar();
     private JTextField searchField;
