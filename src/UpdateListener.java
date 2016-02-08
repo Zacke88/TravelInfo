@@ -1,8 +1,3 @@
-import org.xml.sax.SAXException;
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
