@@ -436,8 +436,6 @@ public class GUI {
      * @param row
      */
     public void updateInfo(int row) {
-        System.out.println(table.getModel().getValueAt(table
-                .convertRowIndexToModel(row), 3));
         imageURL = table.getModel().getValueAt(table.convertRowIndexToModel
                 (row), 3).toString();
         cityName = table.getModel().getValueAt(table.convertRowIndexToModel
