@@ -4,11 +4,11 @@ import java.util.List;
 /**
  * Created by id12jzn on 2016-01-18.
  * <p>
- * Bygger upp tabellen för GUI't som består av samtliga offers programmet
- * läst in
- * Här anges vilka kolumner som finns i tabellen och data läggs ttill enligt
+ * Bygger upp tabellen for GUI't som bestar av samtliga offers programmet
+ * last in
+ * Har anges vilka kolumner som finns i tabellen och data laggs ttill enligt
  * listan med alla offers som tas in i
- * konstruktorn. Metoder finns för att sätta samt hämta data och kolumner
+ * konstruktorn. Metoder finns for att satta samt hamta data och kolumner
  */
 public class OfferTable extends AbstractTableModel {
 

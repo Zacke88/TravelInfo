@@ -1,23 +1,19 @@
 import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by id12jzn on 2016-01-10.
  * <p>
- * Denna klass läser in data från en xml-fil/sida från angivna taggar. Den
+ * Denna klass laser in data fran en xml-fil/sida fran angivna taggar. Den
  * sparar datat i ModelOffers-klassen och
- * skapar en lista av alla Offers den har läst in
+ * skapar en lista av alla Offers den har last in
  */
 public class ReadXML {
 
@@ -27,7 +23,7 @@ public class ReadXML {
             ".se/Blandade-Sidor/feeds/tradera/";
 
     /**
-     * Läser in data genom en SAXParser
+     * Laser in data genom en SAXParser
      *
      * @throws ParserConfigurationException
      * @throws SAXException
@@ -51,7 +47,7 @@ public class ReadXML {
             private boolean bRoomDescription = false;
 
             /**
-             * Metoden kallas på varje gång parsern läser in en start-tagg
+             * Metoden kallas pa varje gang parsern laser in en start-tagg
              * '<' och identifierar vilken tagg den hittat
              *
              * @param uri
@@ -92,7 +88,7 @@ public class ReadXML {
             }
 
             /**
-             * Läser in data som finns i en huvudtagg
+             * Laser in data som finns i en huvudtagg
              *
              * @param uri
              * @param localName
@@ -107,7 +103,7 @@ public class ReadXML {
             }
 
             /**
-             * Läser in de element som finns mellan en start och en slut-tagg
+             * Laser in de element som finns mellan en start och en slut-tagg
              *
              * @param ch
              * @param start

@@ -9,10 +9,10 @@ import static org.junit.Assert.*;
 /**
  * Created by Zacke on 2016-02-08.
  *
- * Test för klassen OfferTable vilket ser till så att rätt antal rader och
- * kolumner kan hämtas ur denna tabell-klass och att data går att lägga till
- * som det ska, både manuellt och från en lista. Ser även till så att
- * kolumnerna är av rätt datatyp.
+ * Test for klassen OfferTable vilket ser till sa att ratt antal rader och
+ * kolumner kan hamtas ur denna tabell-klass och att data gar att lagga till
+ * som det ska, bade manuellt och fran en lista. Ser aven till sa att
+ * kolumnerna ar av ratt datatyp.
  */
 public class OfferTableTest {
 

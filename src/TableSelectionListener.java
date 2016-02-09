@@ -5,9 +5,9 @@ import javax.swing.event.ListSelectionListener;
 /**
  * Created by id12jzn on 2016-01-25.
  * <p>
- * Lyssnare till tabellen för att visa rätt info i GUI't baserat på vilken
- * rad användaren klickar på
- * Kallas på barje gång en ny rad klickas på
+ * Lyssnare till tabellen for att visa ratt info i GUI't baserat pa vilken
+ * rad anvandaren klickar pa
+ * Kallas pa barje gang en ny rad klickas pa
  */
 public class TableSelectionListener implements ListSelectionListener {
 

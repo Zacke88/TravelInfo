@@ -7,9 +7,9 @@ import static org.junit.Assert.*;
 /**
  * Created by Zacke on 2016-02-08.
  *
- * Test för ReadXML klassen som ser till så att inläsningen fungerar och
- * faktiskt returnerar en lista som inte är null där man också kan komma åt
- * element från ModelOffers som lsitan innehåller som inte heller returnerar
+ * Test for ReadXML klassen som ser till sa att inlasningen fungerar och
+ * faktiskt returnerar en lista som inte ar null dar man ocksa kan komma at
+ * element fran ModelOffers som lsitan innehaller som inte heller returnerar
  * null
  */
 public class ReadXMLTest {

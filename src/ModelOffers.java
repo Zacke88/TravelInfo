@@ -1,9 +1,9 @@
 /**
  * Created by id12jzn on 2016-01-10.
  * <p>
- * Denna klass fungerar som en modell för vilka olika element ett Offer
- * består av.
- * Den har också getters och setters för samtliga element
+ * Denna klass fungerar som en modell for vilka olika element ett Offer
+ * bestar av.
+ * Den har ocksa getters och setters for samtliga element
  */
 public class ModelOffers {
 

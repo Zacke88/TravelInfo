@@ -15,9 +15,9 @@ import java.util.Properties;
 /**
  * Created by id12jzn on 2016-01-18.
  * <p>
- * GUI-klass som bygger upp hela vyn för programmet. Den bygger en frame
- * vilket sedan består av en BorderlLayout.
- * Denna frame består av olika paneler som placeras ut enligt layouten
+ * GUI-klass som bygger upp hela vyn for programmet. Den bygger en frame
+ * vilket sedan bestar av en BorderlLayout.
+ * Denna frame bestar av olika paneler som placeras ut enligt layouten
  */
 public class GUI {
 
@@ -49,9 +49,9 @@ public class GUI {
     private Properties prop = new Properties();
 
     /**
-     * Konstructor som läser in property filen när GUI't skapas
-     * Går något fel fångar den upp exceptions och skriver ut felmeddelanden
-     * åt användaren
+     * Konstructor som laser in property filen nar GUI't skapas
+     * Gar nagot fel fangar den upp exceptions och skriver ut felmeddelanden
+     * at anvandaren
      */
     public GUI() {
         try {
@@ -73,8 +73,8 @@ public class GUI {
     }
 
     /**
-     * Bygger den övre panalen till framen vilket består av olika val och
-     * filtreringar användaren kan göra
+     * Bygger den ovre panalen till framen vilket bestar av olika val och
+     * filtreringar anvandaren kan gora
      *
      * @return en JPanel av panale som byggts
      */
@@ -83,7 +83,7 @@ public class GUI {
         upperPanel.setBorder(BorderFactory.createTitledBorder("Offers"));
         upperPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        // Skapar Combo-boxen samt val för denna
+        // Skapar Combo-boxen samt val for denna
         JLabel labelCombo = new JLabel("Set update interval: ");
         String[] options = {"30min", "60min", "90min"};
         comboBox = new JComboBox(options);
@@ -103,8 +103,8 @@ public class GUI {
     }
 
     /**
-     * Bygger den högra panelen till framen vilket består av info för den rad
-     * i tabellen som är markerad
+     * Bygger den hogra panelen till framen vilket bestar av info for den rad
+     * i tabellen som ar markerad
      *
      * @return en JPanel av panale som byggts
      */
@@ -147,9 +147,9 @@ public class GUI {
     }
 
     /**
-     * Bygger den vänstra panelen till framen vilket består av tabellen som
-     * visar en lista över alla Offers
-     * Denna tabell går att sortera
+     * Bygger den vanstra panelen till framen vilket bestar av tabellen som
+     * visar en lista over alla Offers
+     * Denna tabell gar att sortera
      *
      * @return en JPanel av panale som byggts
      */
@@ -181,10 +181,10 @@ public class GUI {
     }
 
     /**
-     * Bygger upp själva framen och lägger till samtliga paneler som tillhör den
+     * Bygger upp sjalva framen och lagger till samtliga paneler som tillhor den
      */
     public void buildFrame() {
-        // Bygger panelerna och lägger till de i framen
+        // Bygger panelerna och lagger till de i framen
         upperPanel = buildUpperPanel();
         rightPanel = buildRightPanel();
         leftPanel = buildLeftPanel();
@@ -198,7 +198,7 @@ public class GUI {
         buildMenu();
         frame.setJMenuBar(menu);
 
-        // Sätter frame inställningar
+        // Satter frame installningar
         frame.setTitle("Travel Info");
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,18 +206,18 @@ public class GUI {
         frame.setVisible(true);
         frame.setResizable(false);
 
-        // Laddar inställningar från properties-filen
+        // Laddar installningar fran properties-filen
         loadProperties();
 
-        // Startar tråden som updaterar tabellen
+        // Startar traden som updaterar tabellen
         startThread();
 
     }
 
     /**
-     * Bygger upp menyraden som finns upptill på framen där användaren kan
-     * göra de val som läggs till.
-     * Innehar också lyssnare för samtliga menyval
+     * Bygger upp menyraden som finns upptill pa framen dar anvandaren kan
+     * gora de val som laggs till.
+     * Innehar ocksa lyssnare for samtliga menyval
      */
     public void buildMenu() {
 
@@ -257,7 +257,7 @@ public class GUI {
         }
 
         /**
-         * Lyssnare för att spara inställningar användaren gjort i en
+         * Lyssnare for att spara installningar anvandaren gjort i en
          * properties-fil
          */
         class SaveAction implements ActionListener {
@@ -281,8 +281,8 @@ public class GUI {
         }
 
         /**
-         * Lyssnare för att återställa standardinställningar och ändra till
-         * dessa värden i properties-filen
+         * Lyssnare for att aterstalla standardinstallningar och andra till
+         * dessa varden i properties-filen
          */
         class ResetAction implements ActionListener {
             @Override
@@ -307,7 +307,7 @@ public class GUI {
         }
 
         /**
-         * Lyssnare som öppnar en popup-ruta där användaren kan läsa mer om
+         * Lyssnare som oppnar en popup-ruta dar anvandaren kan lasa mer om
          * vem som skapar programmet.
          */
         class AboutAction implements ActionListener {
@@ -319,7 +319,7 @@ public class GUI {
         }
 
         /**
-         * Lyssnare för att ändra färgtema
+         * Lyssnare for att andra fargtema
          */
         class NeutralAction implements ActionListener {
             @Override
@@ -329,7 +329,7 @@ public class GUI {
         }
 
         /**
-         * Lyssnare för att ändra färgtema
+         * Lyssnare for att andra fargtema
          */
         class FunkyAction implements ActionListener {
             @Override
@@ -339,7 +339,7 @@ public class GUI {
         }
 
         /**
-         * Lyssnare för att ändra färgtema
+         * Lyssnare for att andra fargtema
          */
         class LightAction implements ActionListener {
             @Override
@@ -349,7 +349,7 @@ public class GUI {
         }
 
         /**
-         * Lyssnare för att ändra färgtema
+         * Lyssnare for att andra fargtema
          */
         class DarkAction implements ActionListener {
             @Override
@@ -369,9 +369,9 @@ public class GUI {
     }
 
     /**
-     * Har en tabell som inparameter vilket skapas utanför GUI-klassen för
-     * att sedan lägga till en scroll för denna och välja vilka koolumner som
-     * skall visas för att tillslut visa den i rätt panel
+     * Har en tabell som inparameter vilket skapas utanfor GUI-klassen for
+     * att sedan lagga till en scroll for denna och valja vilka koolumner som
+     * skall visas for att tillslut visa den i ratt panel
      *
      * @param table
      */
@@ -395,11 +395,11 @@ public class GUI {
 
 
     /**
-     * Bygger om tabellen för att updatera datat i denna.
-     * Blir kallad på tråden som updaterar gui't med bestämda tidsintervall
-     * eller då man användaren manuellt updaterar
+     * Bygger om tabellen for att updatera datat i denna.
+     * Blir kallad pa traden som updaterar gui't med bestamda tidsintervall
+     * eller da man anvandaren manuellt updaterar
      * via knappen i gui't.
-     * Metoden är synchronzed för att trådarna ej skall kunna krocka här
+     * Metoden ar synchronzed for att tradarna ej skall kunna krocka har
      *
      * @param table
      */
@@ -428,10 +428,10 @@ public class GUI {
     }
 
     /**
-     * Updaterar infot som visas i den högra panelen, bör kallas på då
-     * användaren trycker på en ny rad i tabellen
-     * Har ett radnummer som inparameter så den vet vilket erbjudande den
-     * skall visa information för
+     * Updaterar infot som visas i den hogra panelen, bor kallas pa da
+     * anvandaren trycker pa en ny rad i tabellen
+     * Har ett radnummer som inparameter sa den vet vilket erbjudande den
+     * skall visa information for
      *
      * @param row
      */
@@ -458,7 +458,7 @@ public class GUI {
     }
 
     /**
-     * Startar tråden som består av klassen TableUpdater vilket ser till att
+     * Startar traden som bestar av klassen TableUpdater vilket ser till att
      * updatera tabellen med angivet tidsintervall
      */
     public void startThread() {
@@ -467,7 +467,7 @@ public class GUI {
     }
 
     /**
-     * Ändrar det nuvarande färg-temat för framen
+     * andrar det nuvarande farg-temat for framen
      *
      * @param color
      */
@@ -495,7 +495,7 @@ public class GUI {
     }
 
     /**
-     * Laddar inställningar från properties-filen
+     * Laddar installningar fran properties-filen
      */
     public void loadProperties() {
         changeTheme(themeColor);

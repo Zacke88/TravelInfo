@@ -1,15 +1,9 @@
-import org.xml.sax.SAXException;
-
 import javax.swing.*;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Created by id12jzn on 2016-01-18.
  * <p>
- * Controller för programmet vilken knyter ihop vyn med modellen samt
+ * Controller for programmet vilken knyter ihop vyn med modellen samt
  * fungerar som en main-klass
  */
 public class ControllerMain {

@@ -4,9 +4,9 @@ import java.awt.event.ActionListener;
 /**
  * Created by id12jzn on 2016-01-18.
  * <p>
- * Lyssnare för val som görs i ComboBoxen som GUI't skapar
+ * Lyssnare for val som gors i ComboBoxen som GUI't skapar
  * Denna combobox anger i vilket intervall tabellen skall updateras
- * Efter ett val har gjorts ändrar den tiden för i vilket intervall tråden
+ * Efter ett val har gjorts andrar den tiden for i vilket intervall traden
  * skall updatera tabellen med offers
  */
 public class ComboBoxListener implements ActionListener {

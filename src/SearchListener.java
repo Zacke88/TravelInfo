@@ -7,9 +7,9 @@ import javax.swing.table.TableRowSorter;
 /**
  * Created by id12jzn on 2016-01-18.
  * <p>
- * Lyssnare för sökfältet i GUI't, en form av docemtlistener som updaterar
- * tabellen baserat på vad som skrivits in
- * eftersom det skrivs. Den söker i samtliga kolumner som syns i tabellen
+ * Lyssnare for sokfaltet i GUI't, en form av docemtlistener som updaterar
+ * tabellen baserat pa vad som skrivits in
+ * eftersom det skrivs. Den soker i samtliga kolumner som syns i tabellen
  */
 public class SearchListener implements DocumentListener {
 

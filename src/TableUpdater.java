@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by id12jzn on 2016-01-25.
  * <p>
- * En klass som kan köras som en tråd vilket updaterar tabellen i GUI't efter
+ * En klass som kan koras som en trad vilket updaterar tabellen i GUI't efter
  * ett angivet intervall
  */
 public class TableUpdater implements Runnable {
