@@ -25,21 +25,8 @@ public class TableUpdater implements Runnable {
         } catch (InterruptedException e) {
         }
 
-        ReadXML xml = new ReadXML();
+        new BuildOfferTable(gui).execute();
 
-        try {
-            xml.readFile();
-        } catch (ParserConfigurationException e) {
-            gui.errorMessage.setText("<html><font-color 'red'>Parser Error</font></html>");
-        } catch (SAXException e) {
-            gui.errorMessage.setText("<html><font-color 'red'>Sax Error</font></html>");
-        } catch (IOException e) {
-            gui.errorMessage.setText("<html><font-color 'red'>IO " +
-                    "Error</font></html>");
-        }
-
-        JTable table = new JTable(new OfferTable(xml.getList()));
-        gui.rebuildTable(table);
         this.run();
     }
 }

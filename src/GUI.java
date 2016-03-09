@@ -70,6 +70,7 @@ public class GUI {
             errorMessage.setText("<html><font color='red'>Could not load all " +
                     "property-values</font></html>");
         }
+        buildFrame();
     }
 
     /**
@@ -369,42 +370,17 @@ public class GUI {
     }
 
     /**
-     * Har en tabell som inparameter vilket skapas utanfor GUI-klassen for
-     * att sedan lagga till en scroll for denna och valja vilka koolumner som
-     * skall visas for att tillslut visa den i ratt panel
-     *
-     * @param table
-     */
-    public void buildTable(JTable table) {
-        scrollPane = new JScrollPane(table);
-
-        table.removeColumn(table.getColumnModel().getColumn(5));
-        table.removeColumn(table.getColumnModel().getColumn(4));
-        table.removeColumn(table.getColumnModel().getColumn(3));
-        table.setAutoCreateRowSorter(true);
-
-        buildFrame();
-
-        searchField.getDocument().addDocumentListener(new SearchListener
-                (table, searchField));
-        table.getSelectionModel().addListSelectionListener(new
-                TableSelectionListener(this));
-        this.table = table;
-        time.setText(sdf.format(new Date()));
-    }
-
-
-    /**
-     * Bygger om tabellen for att updatera datat i denna.
-     * Blir kallad pa traden som updaterar gui't med bestamda tidsintervall
-     * eller da man anvandaren manuellt updaterar
-     * via knappen i gui't.
-     * Metoden ar synchronzed for att tradarna ej skall kunna krocka har
+     * Bygger tabellen som ar skapad utanfor GUI-klassen vilket den sedan
+     * lagger till en scroll for samt valjer vilka kolumner som skall visas.
+     * Denna metod kan kallas pa igen for att updatera datat i en foregaende
+     * tabell.
+     * Kallas pa fran BuildOfferTable vilket ar en SwingWorker.
+     * Metoden ar synchronzed for att tradar ej skall kunna krocka har
      *
      * @param table
      */
     synchronized
-    public void rebuildTable(JTable table) {
+    public void buildTable(JTable table) {
         scrollPane = new JScrollPane(table);
         table.removeColumn(table.getColumnModel().getColumn(5));
         table.removeColumn(table.getColumnModel().getColumn(4));
@@ -424,6 +400,7 @@ public class GUI {
                 (table, searchField));
         table.getSelectionModel().addListSelectionListener(new
                 TableSelectionListener(this));
+        this.table = table;
         time.setText(sdf.format(new Date()));
     }
 
